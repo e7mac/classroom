@@ -37,16 +37,16 @@ struct MainView: View {
                 clef: appState.clefMode,
                 showKeySignature: !appState.hideKeySignatureFromStaff
             )
-            .frame(maxWidth: 720, minHeight: 280)
+            .frame(maxWidth: .infinity, minHeight: 280)
             KeyboardView(
                 pressedMIDI: appState.activeMIDINotes,
                 handPosition: appState.handPosition,
                 lowMIDI: 21,
                 highMIDI: 108
             )
-            .frame(maxWidth: 720, minHeight: 100, maxHeight: 120)
+            .frame(maxWidth: .infinity, minHeight: 120, maxHeight: 160)
             RecentHistoryStrip(appState: appState)
-                .frame(maxWidth: 720)
+                .frame(maxWidth: .infinity)
             progressionStrip
             Spacer(minLength: 0)
         }

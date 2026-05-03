@@ -14,7 +14,7 @@ struct ClassroomMaestroApp: App {
             MainView()
                 .environmentObject(container)
                 .environmentObject(container.appState)
-                .frame(minWidth: 900, minHeight: 720)
+                .frame(minWidth: 1200, minHeight: 720)
                 .task {
                     await container.startMIDI()
                     container.widgetManager.restorePreviouslyOpenWidgets()
