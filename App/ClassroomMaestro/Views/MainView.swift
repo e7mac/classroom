@@ -112,7 +112,9 @@ struct MainView: View {
                 Label(container.midiActive ? "MIDI On" : "MIDI Off",
                       systemImage: "pianokeys")
             }
-            .help("Connected MIDI devices")
+            .help(container.midiActive
+                  ? "MIDI is on — click to see connected devices"
+                  : "MIDI is off")
 
             Toggle(isOn: Binding(
                 get: { container.acousticEnabled },
@@ -129,7 +131,9 @@ struct MainView: View {
                 Label("Mic", systemImage: "mic")
             }
             .toggleStyle(.button)
-            .help("Toggle acoustic piano detection (microphone)")
+            .help(container.acousticEnabled
+                  ? "Microphone on — listening for acoustic piano"
+                  : "Turn on microphone for acoustic piano detection")
         }
     }
 
@@ -246,8 +250,19 @@ struct WidgetDockView: View {
             Image(systemName: kind.sfSymbol)
         }
         .toggleStyle(.button)
-        .help(kind.displayName)
+        .help(widgetTooltip(kind))
         .accessibilityLabel("\(kind.displayName) widget")
+    }
+
+    private func widgetTooltip(_ kind: WidgetKind) -> String {
+        let action = manager.openWidgets.contains(kind) ? "Close" : "Open"
+        switch kind {
+        case .staff:      return "\(action) Staff widget — floating treble staff"
+        case .keyboard:   return "\(action) Keyboard widget — floating piano keyboard"
+        case .analysis:   return "\(action) Analysis widget — floating chord/Roman label"
+        case .grandStaff: return "\(action) Grand Staff widget — floating treble + bass"
+        case .combo:      return "\(action) Combo widget — staff stacked above keyboard"
+        }
     }
 
     private var stageModeToggle: some View {
@@ -258,7 +273,9 @@ struct WidgetDockView: View {
             Image(systemName: "tv")
         }
         .toggleStyle(.button)
-        .help("Stage Mode (no chrome, snap to grid, above all UI)")
+        .help(manager.stageMode.enabled
+              ? "Exit Stage Mode — restore widget chrome"
+              : "Stage Mode — hide chrome, snap to grid, float above all UI (for recording)")
         .accessibilityLabel("Stage Mode")
     }
 
@@ -283,7 +300,7 @@ struct WidgetDockView: View {
         }
         .menuStyle(.borderlessButton)
         .frame(width: 28)
-        .help("Layout Presets")
+        .help("Load a saved layout preset")
     }
 
     private var saveLayoutButton: some View {
@@ -293,7 +310,7 @@ struct WidgetDockView: View {
             Image(systemName: "plus.rectangle.on.rectangle")
         }
         .buttonStyle(.borderless)
-        .help("Save Layout (\u{2318}\u{21E7}S)")
+        .help("Save current widget layout as a named preset (⌘⇧S)")
         .accessibilityLabel("Save current layout as preset")
     }
 }

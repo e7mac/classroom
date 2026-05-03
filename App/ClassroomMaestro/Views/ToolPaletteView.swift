@@ -56,7 +56,7 @@ public struct ToolPaletteView: View {
                     Label("Clear", systemImage: "trash")
                 }
                 .buttonStyle(.bordered)
-                .help("Clear Progression")
+                .help("Clear progression history")
             }
             Divider().frame(height: 24)
             freezeIndicator
@@ -72,13 +72,25 @@ public struct ToolPaletteView: View {
         Picker("Mode", selection: $displayMode) {
             ForEach(DisplayMode.allCases, id: \.self) { mode in
                 Image(systemName: symbol(for: mode))
-                    .help(mode.displayName)
+                    .help(modeTooltip(for: mode))
                     .tag(mode)
             }
         }
         .pickerStyle(.segmented)
         .labelsHidden()
         .frame(width: 240)
+    }
+
+    private func modeTooltip(for mode: DisplayMode) -> String {
+        let shortcut = "(\(mode.rawValue))"
+        switch mode {
+        case .singleNote:        return "Single Note — show only the most recent note \(shortcut)"
+        case .interval:          return "Interval — show 2 notes and identify the interval \(shortcut)"
+        case .chord:             return "Chord — show 3–4 notes and identify the chord \(shortcut)"
+        case .scale:             return "Scale — show up to 8 notes and match against scale templates \(shortcut)"
+        case .chordProgression:  return "Chord Progression — accumulate chords; sustain pedal commits \(shortcut)"
+        case .handPosition:      return "Hand Position — show 5-finger hand position guide \(shortcut)"
+        }
     }
 
     private func symbol(for mode: DisplayMode) -> String {
@@ -101,6 +113,7 @@ public struct ToolPaletteView: View {
         .pickerStyle(.segmented)
         .labelsHidden()
         .frame(width: 200)
+        .help("Clef — press K to cycle")
     }
 
     private var keySignatureButton: some View {
@@ -113,7 +126,7 @@ public struct ToolPaletteView: View {
             }
         }
         .buttonStyle(.bordered)
-        .help("Key Signature")
+        .help("Key Signature — \(keySignatureLabel) (⌘K to open picker; S toggles staff display)")
         .popover(isPresented: $keySignaturePopoverVisible) {
             KeySignaturePicker(selection: $keySignature) {
                 keySignaturePopoverVisible = false
@@ -135,7 +148,7 @@ public struct ToolPaletteView: View {
         .pickerStyle(.segmented)
         .labelsHidden()
         .frame(width: 140)
-        .help("Analysis Style")
+        .help("Analysis Style — Pop/Jazz chord symbols vs Roman numerals")
     }
 
     private var analysisVisibilityToggle: some View {
@@ -143,7 +156,9 @@ public struct ToolPaletteView: View {
             Image(systemName: analysisOverlayVisible ? "eye" : "eye.slash")
         }
         .toggleStyle(.button)
-        .help("Show Analysis (A)")
+        .help(analysisOverlayVisible
+              ? "Hide Analysis Overlay (A)"
+              : "Show Analysis Overlay (A)")
     }
 
     private var enharmonicButton: some View {
@@ -153,13 +168,15 @@ public struct ToolPaletteView: View {
             Image(systemName: "arrow.triangle.2.circlepath")
         }
         .buttonStyle(.bordered)
-        .help("Cycle Enharmonic Spelling (E)")
+        .help("Cycle Enharmonic Spelling (E) — e.g. C♯ ↔ D♭")
     }
 
     private var freezeIndicator: some View {
         Image(systemName: "snowflake")
             .foregroundStyle(freeze.isFrozen ? Color.blue : Color.clear)
-            .help(freeze.isFrozen ? "Frozen — Caps Lock or sustain pedal" : "")
+            .help(freeze.isFrozen
+                  ? "Display Frozen — Caps Lock or sustain pedal held"
+                  : "Display Live — press Caps Lock or hold sustain pedal to freeze")
             .accessibilityHidden(!freeze.isFrozen)
             .accessibilityLabel(freeze.isFrozen ? "Frozen" : "")
     }

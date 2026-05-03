@@ -75,7 +75,7 @@ struct WidgetChrome<Content: View>: View {
         )
         .controlSize(.mini)
         .frame(width: 80)
-        .help("Opacity")
+        .help("Opacity (50%–100%) — make widget translucent over slides")
     }
 
     private var clickThroughToggle: some View {
@@ -85,7 +85,9 @@ struct WidgetChrome<Content: View>: View {
             Image(systemName: manager.clickThrough(for: kind) ? "cursorarrow.slash" : "cursorarrow")
         }
         .buttonStyle(.borderless)
-        .help("Click-through")
+        .help(manager.clickThrough(for: kind)
+              ? "Click-through ON — clicks pass through to apps below; click again to interact"
+              : "Click-through OFF — click to make this widget pass mouse events to the app below")
     }
 
     private var recordingBorderControls: some View {
@@ -99,7 +101,9 @@ struct WidgetChrome<Content: View>: View {
                       : "rectangle.dashed")
             }
             .toggleStyle(.button)
-            .help("Recording Border")
+            .help(settings.recordingBorderEnabled
+                  ? "Recording border ON — colored outline for cropping in OBS/screen recording"
+                  : "Show colored border around this widget — useful as a crop guide for screen recording")
 
             if settings.recordingBorderEnabled {
                 Menu {
@@ -115,7 +119,7 @@ struct WidgetChrome<Content: View>: View {
                 .menuStyle(.borderlessButton)
                 .menuIndicator(.hidden)
                 .frame(width: 22)
-                .help("Border Color")
+                .help("Choose border color")
             }
         }
     }
@@ -128,7 +132,7 @@ struct WidgetChrome<Content: View>: View {
                 .foregroundStyle(.secondary)
         }
         .buttonStyle(.borderless)
-        .help("Close")
+        .help("Close this widget")
     }
 
     private var borderColorChoices: [(String, String)] {
