@@ -1,3 +1,4 @@
+#if os(macOS)
 import SwiftUI
 import AppCore
 import MusicTheory
@@ -21,3 +22,5 @@ struct StaffWidgetContent: View {
         }
     }
 }
+
+#endif

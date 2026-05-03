@@ -1,5 +1,4 @@
 import SwiftUI
-import AppKit
 import MusicRendering
 import AppCore
 
@@ -87,7 +86,7 @@ public struct KeyboardView: View {
 
     private var keyboardBackground: Color {
         // Dark "felt strip" sliver visible above the keys (the rest is hidden by the keys).
-        Color(NSColor.black).opacity(0.7)
+        Color(white: 0.0).opacity(0.7)
     }
 
     private var whiteKeyTopColor: Color { Color(white: 1.0) }

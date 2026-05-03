@@ -1,3 +1,4 @@
+#if os(macOS)
 import Foundation
 import SwiftUI
 
@@ -41,3 +42,5 @@ extension Color {
         self.init(.sRGB, red: r, green: g, blue: b, opacity: a)
     }
 }
+
+#endif

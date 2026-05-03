@@ -1,3 +1,4 @@
+#if os(macOS)
 import SwiftUI
 import AppCore
 
@@ -21,3 +22,5 @@ struct AnalysisWidgetContent: View {
         }
     }
 }
+
+#endif

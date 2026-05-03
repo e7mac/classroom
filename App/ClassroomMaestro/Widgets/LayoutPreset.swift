@@ -1,3 +1,4 @@
+#if os(macOS)
 import Foundation
 
 // `[WidgetKind: WidgetFrame]` is awkward to round-trip via Codable because
@@ -26,3 +27,5 @@ public struct LayoutPreset: Codable, Hashable, Sendable, Identifiable {
         Dictionary(uniqueKeysWithValues: entries.map { ($0.kind, $0.frame) })
     }
 }
+
+#endif

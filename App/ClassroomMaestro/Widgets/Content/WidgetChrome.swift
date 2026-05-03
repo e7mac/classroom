@@ -1,3 +1,4 @@
+#if os(macOS)
 import SwiftUI
 import AppKit
 import AppCore
@@ -172,3 +173,5 @@ struct VisualEffectBackground: NSViewRepresentable {
         nsView.blendingMode = blendingMode
     }
 }
+
+#endif

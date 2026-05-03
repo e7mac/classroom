@@ -1,3 +1,4 @@
+#if os(macOS)
 import SwiftUI
 import AppKit
 import AppCore
@@ -103,3 +104,5 @@ final class KeyboardShortcutsMonitor {
         }
     }
 }
+
+#endif

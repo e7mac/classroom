@@ -1,3 +1,4 @@
+#if os(macOS)
 import Foundation
 import CoreGraphics
 
@@ -50,3 +51,5 @@ public enum WidgetKind: String, CaseIterable, Sendable, Codable, Identifiable, H
         }
     }
 }
+
+#endif

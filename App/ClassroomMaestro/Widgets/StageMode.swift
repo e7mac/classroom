@@ -1,3 +1,4 @@
+#if os(macOS)
 import Foundation
 import AppKit
 
@@ -22,3 +23,5 @@ extension CGRect {
         return CGRect(origin: CGPoint(x: x, y: y), size: size)
     }
 }
+
+#endif

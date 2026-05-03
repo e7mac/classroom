@@ -9,7 +9,9 @@ struct MainView: View {
     @EnvironmentObject private var appState: AppState
 
     @State private var keySignaturePopoverVisible = false
+    #if os(macOS)
     @State private var shortcuts: KeyboardShortcutsMonitor?
+    #endif
 
     var body: some View {
         VStack(spacing: 12) {
@@ -25,7 +27,9 @@ struct MainView: View {
                 onCycleEnharmonic: { appState.cycleEnharmonic() },
                 onClearProgression: { appState.clearProgression() }
             )
+            #if os(macOS)
             WidgetDockView(manager: container.widgetManager)
+            #endif
             AnalysisOverlayView(
                 analysis: appState.lastAnalysis,
                 displayMode: appState.analysisDisplayMode,
@@ -52,13 +56,17 @@ struct MainView: View {
         }
         .padding()
         .onAppear {
+            #if os(macOS)
             let monitor = KeyboardShortcutsMonitor(appState: appState)
             monitor.install()
             shortcuts = monitor
+            #endif
         }
         .onDisappear {
+            #if os(macOS)
             shortcuts?.uninstall()
             container.widgetManager.closeAll()
+            #endif
         }
         .onReceive(NotificationCenter.default.publisher(for: .openKeySignaturePicker)) { _ in
             keySignaturePopoverVisible = true
@@ -206,6 +214,7 @@ struct MainView: View {
         .frame(width: 900, height: 720)
 }
 
+#if os(macOS)
 struct WidgetDockView: View {
     @ObservedObject var manager: WidgetManager
     @State private var savePresetVisible = false
@@ -322,3 +331,4 @@ struct WidgetDockView: View {
 extension Notification.Name {
     static let openSaveLayoutDialog = Notification.Name("openSaveLayoutDialog")
 }
+#endif

@@ -1,3 +1,4 @@
+#if os(macOS)
 import Foundation
 import CoreGraphics
 
@@ -22,3 +23,5 @@ public struct WidgetFrame: Codable, Hashable, Sendable {
         CGRect(x: x, y: y, width: width, height: height)
     }
 }
+
+#endif

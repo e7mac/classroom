@@ -1,3 +1,4 @@
+#if os(macOS)
 import SwiftUI
 import AppKit
 import Combine
@@ -302,3 +303,5 @@ private func widgetContent(
         ComboWidgetContent(manager: manager, appState: appState)
     }
 }
+
+#endif

@@ -1,3 +1,4 @@
+#if os(macOS)
 import AppKit
 import SwiftUI
 import Combine
@@ -132,3 +133,5 @@ final class WidgetWindowController {
         // deinit isn't allowed under Swift 6 strict concurrency anyway.
     }
 }
+
+#endif

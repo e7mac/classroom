@@ -75,6 +75,11 @@ public actor AcousticPitchDetector {
     public func start() async throws {
         guard !isRunning else { return }
         try await requestMicPermission()
+        #if os(iOS)
+        let session = AVAudioSession.sharedInstance()
+        try session.setCategory(.playAndRecord, mode: .measurement, options: [.allowBluetooth, .mixWithOthers])
+        try session.setActive(true)
+        #endif
         installTapIfNeeded()
         do {
             try engine.start()
@@ -112,7 +117,11 @@ public actor AcousticPitchDetector {
     // MARK: Private — engine
 
     private func requestMicPermission() async throws {
+        #if os(iOS)
+        let granted = await AVAudioApplication.requestRecordPermission()
+        #else
         let granted = await AVCaptureDevice.requestAccess(for: .audio)
+        #endif
         if !granted {
             throw PitchDetectorError.microphonePermissionDenied
         }

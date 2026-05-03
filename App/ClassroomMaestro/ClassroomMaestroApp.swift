@@ -1,5 +1,7 @@
 import SwiftUI
+#if os(macOS)
 import AppKit
+#endif
 import AppCore
 import MusicTheory
 import MusicRendering
@@ -14,12 +16,17 @@ struct ClassroomMaestroApp: App {
             MainView()
                 .environmentObject(container)
                 .environmentObject(container.appState)
+                #if os(macOS)
                 .frame(minWidth: 1200, minHeight: 720)
+                #endif
                 .task {
                     await container.startMIDI()
+                    #if os(macOS)
                     container.widgetManager.restorePreviouslyOpenWidgets()
+                    #endif
                 }
         }
+        #if os(macOS)
         .windowStyle(.titleBar)
         .commands {
             CommandGroup(replacing: .appInfo) {
@@ -47,6 +54,7 @@ struct ClassroomMaestroApp: App {
                 .keyboardShortcut("s", modifiers: [.command, .shift])
             }
         }
+        #endif
     }
 }
 

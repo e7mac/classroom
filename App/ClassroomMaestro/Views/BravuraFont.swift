@@ -1,5 +1,10 @@
 import SwiftUI
 import CoreText
+#if os(macOS)
+import AppKit
+#else
+import UIKit
+#endif
 
 enum BravuraFont {
     static let name = "Bravura"
@@ -28,10 +33,16 @@ enum BravuraFont {
         }
     }
 
-    /// Idempotent. Info.plist's ATSApplicationFontsPath handles bundle font loading
-    /// for the app at launch, but Xcode previews can miss that — register manually.
+    /// Idempotent. Info.plist's ATSApplicationFontsPath (macOS) and UIAppFonts (iOS)
+    /// handle bundle font loading for the app at launch, but Xcode previews can
+    /// miss that — register manually.
     static func registerIfNeeded() {
+        #if os(macOS)
         let alreadyRegistered = NSFontManager.shared.availableFonts.contains(name)
+        #else
+        let alreadyRegistered = UIFont.familyNames.contains(name)
+            || UIFont.fontNames(forFamilyName: name).contains(name)
+        #endif
         guard !alreadyRegistered else { return }
         guard let url = Bundle.main.url(forResource: name, withExtension: "otf") else { return }
         var error: Unmanaged<CFError>?

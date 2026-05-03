@@ -1,3 +1,4 @@
+#if os(macOS)
 import SwiftUI
 import AppCore
 import MusicTheory
@@ -31,3 +32,5 @@ struct ComboWidgetContent: View {
         }
     }
 }
+
+#endif
