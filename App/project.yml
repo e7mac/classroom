@@ -26,7 +26,7 @@ packages:
 targets:
   ClassroomMaestro:
     type: application
-    supportedDestinations: [mac, iOS, iPad]
+    supportedDestinations: [macOS, iOS, iPad]
     deploymentTarget:
       macOS: "14.0"
       iOS: "17.0"
