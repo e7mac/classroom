@@ -29,9 +29,53 @@ public struct StaffView: View {
     private var geometry: StaffLayout.Geometry {
         StaffLayout.Geometry(
             staffSpacing: staffSpacing,
-            trebleStaffTopY: 30,
+            trebleStaffTopY: ledgerHeadroomAboveStaff,
             grandStaffGap: 60
         )
+    }
+
+    /// Extra space reserved above the top staff line so ledger lines and
+    /// noteheads on high notes (e.g. C7) aren't clipped at the top of the canvas.
+    private var ledgerHeadroomAboveStaff: CGFloat {
+        // Default 30pt + 1 staffSpacing per ledger line slot we might need.
+        // Cap so the staff doesn't drift absurdly far down for a single C8.
+        let extraSlots = max(0, maxLedgerSlotsAboveTopLine())
+        return 30 + CGFloat(min(extraSlots, 8)) * staffSpacing
+    }
+
+    /// Extra space reserved below the bottom staff line for low-note ledger lines.
+    private var ledgerFootroomBelowStaff: CGFloat {
+        let extraSlots = max(0, maxLedgerSlotsBelowBottomLine())
+        return 30 + CGFloat(min(extraSlots, 8)) * staffSpacing
+    }
+
+    private func maxLedgerSlotsAboveTopLine() -> Int {
+        // Treble top line is F5 (diatonic step 5*7+3 = 38).
+        // Each diatonic step above adds half a staff space; ledger lines occur
+        // every two steps. 1 ledger line = 2 steps above F5.
+        let topLineStep = 5 * 7 + 3   // F5
+        let highestStep = notes.map { staffLayoutStep(for: $0) }.max() ?? topLineStep
+        let stepsAbove = max(0, highestStep - topLineStep)
+        return Int(ceil(Double(stepsAbove) / 2.0))
+    }
+
+    private func maxLedgerSlotsBelowBottomLine() -> Int {
+        // Bass bottom line is G2 (diatonic step 2*7+4 = 18).
+        // For grand or treble, the lowest visible reference is bass G2 if grand,
+        // treble E4 (28) if treble-only.
+        let bottomLineStep: Int
+        switch clef {
+        case .treble: bottomLineStep = 4 * 7 + 2  // E4
+        case .bass:   bottomLineStep = 2 * 7 + 4  // G2
+        case .grand:  bottomLineStep = 2 * 7 + 4  // G2
+        }
+        let lowestStep = notes.map { staffLayoutStep(for: $0) }.min() ?? bottomLineStep
+        let stepsBelow = max(0, bottomLineStep - lowestStep)
+        return Int(ceil(Double(stepsBelow) / 2.0))
+    }
+
+    private func staffLayoutStep(for note: Note) -> Int {
+        note.octave * 7 + note.pitchClass.rawValue
     }
 
     private var clefSet: ClefSet { ClefSet(clef: clef) }
@@ -52,7 +96,7 @@ public struct StaffView: View {
         Canvas(rendersAsynchronously: false) { context, size in
             draw(in: &context, size: size, geometry: geo)
         }
-        .frame(minHeight: geo.totalHeight(for: clef) + 30)
+        .frame(minHeight: geo.totalHeight(for: clef) + ledgerFootroomBelowStaff)
         .animation(.reduceMotionAware(.easeInOut(duration: 0.18), reduceMotion: reduceMotion), value: notes)
         .accessibilityLabel(accessibilityDescription)
         .onAppear { BravuraFont.registerIfNeeded() }
