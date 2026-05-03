@@ -200,6 +200,8 @@ struct MainView: View {
 
 struct WidgetDockView: View {
     @ObservedObject var manager: WidgetManager
+    @State private var savePresetVisible = false
+    @State private var newPresetName = ""
 
     var body: some View {
         HStack(spacing: 8) {
@@ -207,17 +209,95 @@ struct WidgetDockView: View {
                 .font(.caption)
                 .foregroundStyle(.secondary)
             ForEach(WidgetKind.allCases) { kind in
-                Toggle(isOn: Binding(
-                    get: { manager.openWidgets.contains(kind) },
-                    set: { _ in manager.toggle(kind) }
-                )) {
-                    Image(systemName: kind.sfSymbol)
-                }
-                .toggleStyle(.button)
-                .help(kind.displayName)
-                .accessibilityLabel("\(kind.displayName) widget")
+                widgetToggle(kind)
             }
+            Divider().frame(height: 22)
+            stageModeToggle
+            Divider().frame(height: 22)
+            presetMenu
+            saveLayoutButton
         }
         .padding(.horizontal, 8)
+        .alert("Save Layout", isPresented: $savePresetVisible) {
+            TextField("Name", text: $newPresetName)
+            Button("Save") {
+                let name = newPresetName.trimmingCharacters(in: .whitespacesAndNewlines)
+                if !name.isEmpty {
+                    manager.saveCurrentLayoutAsPreset(name: name)
+                }
+                newPresetName = ""
+            }
+            Button("Cancel", role: .cancel) {
+                newPresetName = ""
+            }
+        } message: {
+            Text("Capture currently open widgets and their positions.")
+        }
+        .onReceive(NotificationCenter.default.publisher(for: .openSaveLayoutDialog)) { _ in
+            savePresetVisible = true
+        }
     }
+
+    private func widgetToggle(_ kind: WidgetKind) -> some View {
+        Toggle(isOn: Binding(
+            get: { manager.openWidgets.contains(kind) },
+            set: { _ in manager.toggle(kind) }
+        )) {
+            Image(systemName: kind.sfSymbol)
+        }
+        .toggleStyle(.button)
+        .help(kind.displayName)
+        .accessibilityLabel("\(kind.displayName) widget")
+    }
+
+    private var stageModeToggle: some View {
+        Toggle(isOn: Binding(
+            get: { manager.stageMode.enabled },
+            set: { _ in manager.toggleStageMode() }
+        )) {
+            Image(systemName: "tv")
+        }
+        .toggleStyle(.button)
+        .help("Stage Mode (no chrome, snap to grid, above all UI)")
+        .accessibilityLabel("Stage Mode")
+    }
+
+    private var presetMenu: some View {
+        Menu {
+            if manager.savedPresets.isEmpty {
+                Text("No saved layouts").foregroundStyle(.secondary)
+            } else {
+                ForEach(manager.savedPresets) { preset in
+                    Button(preset.name) { manager.loadPreset(preset) }
+                }
+                Divider()
+                Menu("Delete") {
+                    ForEach(manager.savedPresets) { preset in
+                        Button(preset.name) { manager.deletePreset(name: preset.name) }
+                    }
+                }
+            }
+        } label: {
+            Label("Layouts", systemImage: "rectangle.stack")
+                .labelStyle(.iconOnly)
+        }
+        .menuStyle(.borderlessButton)
+        .frame(width: 28)
+        .help("Layout Presets")
+    }
+
+    private var saveLayoutButton: some View {
+        Button {
+            savePresetVisible = true
+        } label: {
+            Image(systemName: "plus.rectangle.on.rectangle")
+        }
+        .buttonStyle(.borderless)
+        .help("Save Layout (\u{2318}\u{21E7}S)")
+        .accessibilityLabel("Save current layout as preset")
+    }
+}
+
+extension Notification.Name {
+    static let openSaveLayoutDialog = Notification.Name("openSaveLayoutDialog")
 }

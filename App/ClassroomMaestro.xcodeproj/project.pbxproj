@@ -10,6 +10,7 @@
 		05F4A1CCBA423857B824362E /* FloatingPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 332BBC007F8B67D3EAAF537D /* FloatingPanel.swift */; };
 		107945D345D6D22A4D8C69D8 /* WidgetFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E67D90E7F882236A5EA2D36 /* WidgetFrame.swift */; };
 		23904CF908B51350C96B121B /* WidgetWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C64C2484B34879DDB2492E /* WidgetWindowController.swift */; };
+		33252D57DEC2A8282D7C799D /* WidgetVisualSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C29CBAA0B00DDE972B7E50 /* WidgetVisualSettings.swift */; };
 		3351BA897E4E69B374DCF366 /* AudioInput in Frameworks */ = {isa = PBXBuildFile; productRef = F6D22BE49BA0934B52AB042C /* AudioInput */; };
 		3C44842620A584BF684E175E /* AnalysisWidgetContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E05FBD5EA92636A7875212 /* AnalysisWidgetContent.swift */; };
 		458111E607CEE2D596653EA8 /* KeyboardWidgetContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77935CFE855240C642CE2000 /* KeyboardWidgetContent.swift */; };
@@ -19,11 +20,13 @@
 		69D7A1EFBC38E5A8BB2C70F9 /* WidgetManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE3F827A8C774EC694B02663 /* WidgetManager.swift */; };
 		75CDC5B6E55FC6994F511653 /* MusicRendering in Frameworks */ = {isa = PBXBuildFile; productRef = 349B8741901FF35063AC0108 /* MusicRendering */; };
 		798DA0585A3A401E9B545EE1 /* KeyboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 674502C854976E40A706C35F /* KeyboardView.swift */; };
+		8D79F1CE48D1DC621320A177 /* StageMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 156354FB1E1E6ABC1A1CC7B7 /* StageMode.swift */; };
 		8F3CE08289A2AEDEF0F717CC /* Bravura-LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 6F97600CE81D2C8D1002D167 /* Bravura-LICENSE.txt */; };
 		9506FAFF5A1539D3CDA82E3F /* KeySignaturePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A900284C74A53565E2C03C5 /* KeySignaturePicker.swift */; };
 		982243898DD58DF3FEB5C899 /* AnalysisOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22592665E10CB13F8714DFB6 /* AnalysisOverlayView.swift */; };
 		A283A3A445502613308720F4 /* StaffWidgetContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05200C3B8B73646FD082ECB4 /* StaffWidgetContent.swift */; };
 		A65D959460EEC06725CA93B6 /* MusicTheory in Frameworks */ = {isa = PBXBuildFile; productRef = 9293CB440121A7865EB2B327 /* MusicTheory */; };
+		A70ECD8DC7232318835AAB54 /* LayoutPreset.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B19C38192B07A79F203581 /* LayoutPreset.swift */; };
 		AF5AFD16B5EE1DE44ABEAFED /* ComboWidgetContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E85B2B2CEEB75CF04B068CD2 /* ComboWidgetContent.swift */; };
 		B07EA63B01943656AEDF078D /* KeyboardShortcuts.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2C62E20E5D6349DEE9BF1B0 /* KeyboardShortcuts.swift */; };
 		B9AC326D22F73E4A52D5B6EB /* ClassroomMaestroApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BB0725D7CCC19562939C39 /* ClassroomMaestroApp.swift */; };
@@ -39,12 +42,14 @@
 /* Begin PBXFileReference section */
 		05200C3B8B73646FD082ECB4 /* StaffWidgetContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaffWidgetContent.swift; sourceTree = "<group>"; };
 		09F9436FACEACD29A77A5235 /* StaffView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaffView.swift; sourceTree = "<group>"; };
+		156354FB1E1E6ABC1A1CC7B7 /* StageMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StageMode.swift; sourceTree = "<group>"; };
 		22592665E10CB13F8714DFB6 /* AnalysisOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalysisOverlayView.swift; sourceTree = "<group>"; };
 		289716DE0B5E5DE4FA66BC51 /* WidgetChrome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetChrome.swift; sourceTree = "<group>"; };
 		2A900284C74A53565E2C03C5 /* KeySignaturePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeySignaturePicker.swift; sourceTree = "<group>"; };
 		2E67D90E7F882236A5EA2D36 /* WidgetFrame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetFrame.swift; sourceTree = "<group>"; };
 		332BBC007F8B67D3EAAF537D /* FloatingPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingPanel.swift; sourceTree = "<group>"; };
 		3C3DD95E3941A78B48F1A223 /* ClassroomCore */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ClassroomCore; path = ../Packages/ClassroomCore; sourceTree = SOURCE_ROOT; };
+		42C29CBAA0B00DDE972B7E50 /* WidgetVisualSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetVisualSettings.swift; sourceTree = "<group>"; };
 		47B86FC2BC563F8A45D30CE1 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		48F6ABE21277A36DEFEC9B81 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		49FF17B28A22E6C3DC44850A /* WidgetKind.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetKind.swift; sourceTree = "<group>"; };
@@ -60,6 +65,7 @@
 		97C64C2484B34879DDB2492E /* WidgetWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetWindowController.swift; sourceTree = "<group>"; };
 		AE3F827A8C774EC694B02663 /* WidgetManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetManager.swift; sourceTree = "<group>"; };
 		B33CBDCB01FE497516A2D20E /* BravuraFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BravuraFont.swift; sourceTree = "<group>"; };
+		D0B19C38192B07A79F203581 /* LayoutPreset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutPreset.swift; sourceTree = "<group>"; };
 		DBE34051C26776D9AAF206B2 /* GrandStaffWidgetContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrandStaffWidgetContent.swift; sourceTree = "<group>"; };
 		E85B2B2CEEB75CF04B068CD2 /* ComboWidgetContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComboWidgetContent.swift; sourceTree = "<group>"; };
 		F2C62E20E5D6349DEE9BF1B0 /* KeyboardShortcuts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardShortcuts.swift; sourceTree = "<group>"; };
@@ -117,9 +123,12 @@
 			isa = PBXGroup;
 			children = (
 				332BBC007F8B67D3EAAF537D /* FloatingPanel.swift */,
+				D0B19C38192B07A79F203581 /* LayoutPreset.swift */,
+				156354FB1E1E6ABC1A1CC7B7 /* StageMode.swift */,
 				2E67D90E7F882236A5EA2D36 /* WidgetFrame.swift */,
 				49FF17B28A22E6C3DC44850A /* WidgetKind.swift */,
 				AE3F827A8C774EC694B02663 /* WidgetManager.swift */,
+				42C29CBAA0B00DDE972B7E50 /* WidgetVisualSettings.swift */,
 				97C64C2484B34879DDB2492E /* WidgetWindowController.swift */,
 				891A85317615DED1A80718DB /* Content */,
 			);
@@ -286,14 +295,17 @@
 				B07EA63B01943656AEDF078D /* KeyboardShortcuts.swift in Sources */,
 				798DA0585A3A401E9B545EE1 /* KeyboardView.swift in Sources */,
 				458111E607CEE2D596653EA8 /* KeyboardWidgetContent.swift in Sources */,
+				A70ECD8DC7232318835AAB54 /* LayoutPreset.swift in Sources */,
 				C2DDE76AC9A75B2C288AA010 /* MainView.swift in Sources */,
 				CA2444FAE4C6DE825426934A /* StaffView.swift in Sources */,
 				A283A3A445502613308720F4 /* StaffWidgetContent.swift in Sources */,
+				8D79F1CE48D1DC621320A177 /* StageMode.swift in Sources */,
 				5D35AAC238324B9D55ED2559 /* ToolPaletteView.swift in Sources */,
 				652F46823D86930EE94B4B6A /* WidgetChrome.swift in Sources */,
 				107945D345D6D22A4D8C69D8 /* WidgetFrame.swift in Sources */,
 				5A32B9AE673FA15E4A8C8A29 /* WidgetKind.swift in Sources */,
 				69D7A1EFBC38E5A8BB2C70F9 /* WidgetManager.swift in Sources */,
+				33252D57DEC2A8282D7C799D /* WidgetVisualSettings.swift in Sources */,
 				23904CF908B51350C96B121B /* WidgetWindowController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -104,6 +104,19 @@ final class WidgetWindowController {
         clickThrough = enabled
     }
 
+    func applyStageMode(_ settings: StageModeSettings) {
+        if settings.enabled {
+            // `.screenSaver + 1` floats above macOS notification banners and the menu bar
+            // so a teacher's widgets stay visible during a class even when alerts arrive.
+            panel.level = NSWindow.Level(rawValue: NSWindow.Level.screenSaver.rawValue + 1)
+            panel.hasShadow = false
+        } else {
+            panel.level = .floating
+            panel.hasShadow = true
+        }
+        panel.invalidateShadow()
+    }
+
     private func scheduleFrameSave() {
         positionSaveTask?.cancel()
         positionSaveTask = Task { @MainActor [weak self] in

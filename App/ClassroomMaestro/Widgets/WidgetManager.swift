@@ -6,6 +6,9 @@ import AppCore
 @MainActor
 final class WidgetManager: ObservableObject {
     @Published private(set) var openWidgets: Set<WidgetKind> = []
+    @Published var stageMode = StageModeSettings()
+    @Published private(set) var savedPresets: [LayoutPreset] = []
+    @Published private(set) var visualSettings: [WidgetKind: WidgetVisualSettings] = [:]
 
     private let appState: AppState
     private var controllers: [WidgetKind: WidgetWindowController] = [:]
@@ -14,6 +17,8 @@ final class WidgetManager: ObservableObject {
     init(appState: AppState, defaults: UserDefaults = .standard) {
         self.appState = appState
         self.defaults = defaults
+        loadPresets()
+        loadVisualSettings()
     }
 
     // MARK: - Open / close
@@ -59,6 +64,7 @@ final class WidgetManager: ObservableObject {
             self?.handlePanelClosed(kind: kind)
         }
         controllers[kind] = controller
+        controller.applyStageMode(stageMode)
         controller.show()
         openWidgets.insert(kind)
         saveFrame(frame, for: kind)
@@ -99,6 +105,118 @@ final class WidgetManager: ObservableObject {
         controllers[kind].map { $0.clickThrough } ?? loadFrame(for: kind)?.clickThrough ?? false
     }
 
+    // MARK: - Stage Mode
+
+    func toggleStageMode() {
+        stageMode.enabled.toggle()
+        applyStageModeToAllControllers()
+    }
+
+    private func applyStageModeToAllControllers() {
+        for (kind, controller) in controllers {
+            controller.applyStageMode(stageMode)
+            if stageMode.enabled {
+                let snapped = controller.panel.frame.snappedToGrid(stageMode.snapGridSize)
+                controller.panel.setFrame(snapped, display: true, animate: true)
+                if var f = loadFrame(for: kind) {
+                    f.x = Double(snapped.origin.x)
+                    f.y = Double(snapped.origin.y)
+                    saveFrame(f, for: kind)
+                }
+            }
+        }
+    }
+
+    // MARK: - Recording border / visual settings
+
+    func setRecordingBorderEnabled(_ enabled: Bool, for kind: WidgetKind) {
+        var s = visualSettings[kind] ?? WidgetVisualSettings()
+        s.recordingBorderEnabled = enabled
+        visualSettings[kind] = s
+        saveVisualSettings()
+    }
+
+    func setRecordingBorderColor(_ hex: String, for kind: WidgetKind) {
+        var s = visualSettings[kind] ?? WidgetVisualSettings()
+        s.recordingBorderColorHex = hex
+        visualSettings[kind] = s
+        saveVisualSettings()
+    }
+
+    func visualSettings(for kind: WidgetKind) -> WidgetVisualSettings {
+        visualSettings[kind] ?? WidgetVisualSettings()
+    }
+
+    private func loadVisualSettings() {
+        guard let data = defaults.data(forKey: visualSettingsKey),
+              let raw = try? JSONDecoder().decode([String: WidgetVisualSettings].self, from: data)
+        else { return }
+        var loaded: [WidgetKind: WidgetVisualSettings] = [:]
+        for (key, value) in raw {
+            if let kind = WidgetKind(rawValue: key) {
+                loaded[kind] = value
+            }
+        }
+        visualSettings = loaded
+    }
+
+    private func saveVisualSettings() {
+        let raw = Dictionary(uniqueKeysWithValues: visualSettings.map { ($0.key.rawValue, $0.value) })
+        if let data = try? JSONEncoder().encode(raw) {
+            defaults.set(data, forKey: visualSettingsKey)
+        }
+    }
+
+    // MARK: - Layout Presets
+
+    func saveCurrentLayoutAsPreset(name: String) {
+        var widgets: [WidgetKind: WidgetFrame] = [:]
+        for kind in openWidgets {
+            if let frame = loadFrame(for: kind) {
+                widgets[kind] = frame
+            }
+        }
+        let preset = LayoutPreset(name: name, widgets: widgets)
+        savedPresets.removeAll { $0.name == name }
+        savedPresets.append(preset)
+        savedPresets.sort { $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending }
+        savePresets()
+    }
+
+    func deletePreset(name: String) {
+        savedPresets.removeAll { $0.name == name }
+        savePresets()
+    }
+
+    func loadPreset(_ preset: LayoutPreset) {
+        let presetKinds = Set(preset.widgets.keys)
+        for kind in openWidgets where !presetKinds.contains(kind) {
+            close(kind)
+        }
+        for (kind, frame) in preset.widgets {
+            let safeFrame = ensureOnVisibleScreen(frame, for: kind)
+            saveFrame(safeFrame, for: kind)
+            if openWidgets.contains(kind), let controller = controllers[kind] {
+                controller.panel.setFrame(safeFrame.rect, display: true, animate: true)
+            } else {
+                open(kind)
+            }
+        }
+    }
+
+    private func loadPresets() {
+        guard let data = defaults.data(forKey: presetsKey) else { return }
+        if let presets = try? JSONDecoder().decode([LayoutPreset].self, from: data) {
+            savedPresets = presets
+        }
+    }
+
+    private func savePresets() {
+        if let data = try? JSONEncoder().encode(savedPresets) {
+            defaults.set(data, forKey: presetsKey)
+        }
+    }
+
     // MARK: - Restore on app launch
 
     func restorePreviouslyOpenWidgets() {
@@ -113,6 +231,8 @@ final class WidgetManager: ObservableObject {
     // MARK: - Persistence
 
     private let openSetKey = "widget.openSet"
+    private let presetsKey = "widget.presets"
+    private let visualSettingsKey = "widget.visualSettings"
 
     private func frameKey(for kind: WidgetKind) -> String {
         "widget.frame.\(kind.rawValue)"

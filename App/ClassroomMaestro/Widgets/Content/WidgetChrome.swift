@@ -11,21 +11,38 @@ struct WidgetChrome<Content: View>: View {
     @State private var isExpanded = false
     @State private var isHovering = false
 
+    private var stageModeActive: Bool {
+        manager.stageMode.enabled && manager.stageMode.hideChrome
+    }
+
+    private var settings: WidgetVisualSettings {
+        manager.visualSettings[kind] ?? WidgetVisualSettings()
+    }
+
     var body: some View {
         ZStack(alignment: .topTrailing) {
-            VisualEffectBackground(material: .hudWindow, blendingMode: .behindWindow)
+            if !stageModeActive {
+                VisualEffectBackground(material: .hudWindow, blendingMode: .behindWindow)
+            }
 
             content(isExpanded)
-                .padding(8)
+                .padding(stageModeActive ? 0 : 8)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
 
-            if isHovering {
+            if !stageModeActive && isHovering {
                 controlBar
                     .padding(6)
                     .transition(.opacity)
             }
         }
-        .clipShape(RoundedRectangle(cornerRadius: 12))
+        .clipShape(RoundedRectangle(cornerRadius: stageModeActive ? 0 : 12))
+        .overlay {
+            if settings.recordingBorderEnabled {
+                Rectangle()
+                    .strokeBorder(settings.recordingBorderColor, lineWidth: 4)
+                    .allowsHitTesting(false)
+            }
+        }
         .onHover { isHovering = $0 }
         .onTapGesture(count: 2) {
             withAnimation(.easeInOut(duration: 0.18)) {
@@ -37,38 +54,94 @@ struct WidgetChrome<Content: View>: View {
 
     private var controlBar: some View {
         HStack(spacing: 6) {
-            Slider(
-                value: Binding(
-                    get: { manager.opacity(for: kind) },
-                    set: { manager.setOpacity($0, for: kind) }
-                ),
-                in: 0.5...1.0
-            )
-            .controlSize(.mini)
-            .frame(width: 80)
-            .help("Opacity")
-
-            Button {
-                manager.setClickThrough(!manager.clickThrough(for: kind), for: kind)
-            } label: {
-                Image(systemName: manager.clickThrough(for: kind) ? "cursorarrow.slash" : "cursorarrow")
-            }
-            .buttonStyle(.borderless)
-            .help("Click-through")
-
-            Button {
-                manager.close(kind)
-            } label: {
-                Image(systemName: "xmark.circle.fill")
-                    .foregroundStyle(.secondary)
-            }
-            .buttonStyle(.borderless)
-            .help("Close")
+            opacitySlider
+            clickThroughToggle
+            recordingBorderControls
+            closeButton
         }
         .padding(.horizontal, 8)
         .padding(.vertical, 4)
         .background(.thinMaterial)
         .clipShape(Capsule())
+    }
+
+    private var opacitySlider: some View {
+        Slider(
+            value: Binding(
+                get: { manager.opacity(for: kind) },
+                set: { manager.setOpacity($0, for: kind) }
+            ),
+            in: 0.5...1.0
+        )
+        .controlSize(.mini)
+        .frame(width: 80)
+        .help("Opacity")
+    }
+
+    private var clickThroughToggle: some View {
+        Button {
+            manager.setClickThrough(!manager.clickThrough(for: kind), for: kind)
+        } label: {
+            Image(systemName: manager.clickThrough(for: kind) ? "cursorarrow.slash" : "cursorarrow")
+        }
+        .buttonStyle(.borderless)
+        .help("Click-through")
+    }
+
+    private var recordingBorderControls: some View {
+        HStack(spacing: 4) {
+            Toggle(isOn: Binding(
+                get: { settings.recordingBorderEnabled },
+                set: { manager.setRecordingBorderEnabled($0, for: kind) }
+            )) {
+                Image(systemName: settings.recordingBorderEnabled
+                      ? "rectangle.dashed.badge.record"
+                      : "rectangle.dashed")
+            }
+            .toggleStyle(.button)
+            .help("Recording Border")
+
+            if settings.recordingBorderEnabled {
+                Menu {
+                    ForEach(borderColorChoices, id: \.0) { name, hex in
+                        Button(name) { manager.setRecordingBorderColor(hex, for: kind) }
+                    }
+                } label: {
+                    Circle()
+                        .fill(settings.recordingBorderColor)
+                        .overlay(Circle().strokeBorder(.secondary, lineWidth: 0.5))
+                        .frame(width: 14, height: 14)
+                }
+                .menuStyle(.borderlessButton)
+                .menuIndicator(.hidden)
+                .frame(width: 22)
+                .help("Border Color")
+            }
+        }
+    }
+
+    private var closeButton: some View {
+        Button {
+            manager.close(kind)
+        } label: {
+            Image(systemName: "xmark.circle.fill")
+                .foregroundStyle(.secondary)
+        }
+        .buttonStyle(.borderless)
+        .help("Close")
+    }
+
+    private var borderColorChoices: [(String, String)] {
+        [
+            ("Red",    "#FF3B30"),
+            ("Orange", "#FF9500"),
+            ("Yellow", "#FFCC00"),
+            ("Green",  "#34C759"),
+            ("Blue",   "#0A84FF"),
+            ("Purple", "#AF52DE"),
+            ("White",  "#FFFFFF"),
+            ("Black",  "#000000"),
+        ]
     }
 }
 

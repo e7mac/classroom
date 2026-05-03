@@ -26,6 +26,11 @@ struct ClassroomMaestroApp: App {
                     NotificationCenter.default.post(name: .openKeySignaturePicker, object: nil)
                 }
                 .keyboardShortcut("k", modifiers: [.command])
+
+                Button("Save Layout") {
+                    NotificationCenter.default.post(name: .openSaveLayoutDialog, object: nil)
+                }
+                .keyboardShortcut("s", modifiers: [.command, .shift])
             }
         }
     }
