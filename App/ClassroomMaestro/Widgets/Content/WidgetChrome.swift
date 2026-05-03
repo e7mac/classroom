@@ -11,6 +11,8 @@ struct WidgetChrome<Content: View>: View {
     @State private var isExpanded = false
     @State private var isHovering = false
 
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
     private var stageModeActive: Bool {
         manager.stageMode.enabled && manager.stageMode.hideChrome
     }
@@ -45,11 +47,15 @@ struct WidgetChrome<Content: View>: View {
         }
         .onHover { isHovering = $0 }
         .onTapGesture(count: 2) {
-            withAnimation(.easeInOut(duration: 0.18)) {
+            if reduceMotion {
                 isExpanded.toggle()
+            } else {
+                withAnimation(.easeInOut(duration: 0.18)) {
+                    isExpanded.toggle()
+                }
             }
         }
-        .animation(.easeInOut(duration: 0.12), value: isHovering)
+        .animation(.reduceMotionAware(.easeInOut(duration: 0.12), reduceMotion: reduceMotion), value: isHovering)
     }
 
     private var controlBar: some View {

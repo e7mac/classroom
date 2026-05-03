@@ -1,4 +1,5 @@
 import SwiftUI
+import AppKit
 import MusicRendering
 import AppCore
 
@@ -10,6 +11,8 @@ public struct KeyboardView: View {
     public let highMIDI: Int
     public let pressedColor: Color
     public let isHidden: Bool
+
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     public init(
         pressedMIDI: Set<Int> = [],
@@ -32,6 +35,7 @@ public struct KeyboardView: View {
     public var body: some View {
         if isHidden {
             emptyPlaceholder
+                .accessibilityLabel(accessibilityDescription)
         } else {
             GeometryReader { proxy in
                 let availableWidth = proxy.size.width
@@ -49,6 +53,8 @@ public struct KeyboardView: View {
                 }
             }
             .frame(minHeight: 80)
+            .accessibilityElement(children: .ignore)
+            .accessibilityLabel(accessibilityDescription)
         }
     }
 
@@ -66,14 +72,44 @@ public struct KeyboardView: View {
             drawKeyboard(in: &context, size: size)
         }
         .frame(width: width, height: height)
-        .background(Color.white)
+        .background(keyboardBackground)
         .clipShape(RoundedRectangle(cornerRadius: 4))
         .overlay(
             RoundedRectangle(cornerRadius: 4)
                 .stroke(Color.primary.opacity(0.3), lineWidth: 1)
         )
-        .animation(.easeOut(duration: 0.08), value: pressedMIDI)
-        .animation(.easeOut(duration: 0.08), value: staccatoMIDI)
+        .animation(.reduceMotionAware(.easeOut(duration: 0.08), reduceMotion: reduceMotion), value: pressedMIDI)
+        .animation(.reduceMotionAware(.easeOut(duration: 0.08), reduceMotion: reduceMotion), value: staccatoMIDI)
+    }
+
+    // MARK: - Theme-aware colors
+
+    private var keyboardBackground: Color {
+        Color(NSColor.windowBackgroundColor)
+    }
+
+    private var whiteKeyFill: Color {
+        Color(NSColor.controlBackgroundColor)
+    }
+
+    private var blackKeyFill: Color {
+        Color(NSColor.controlTextColor).opacity(0.85)
+    }
+
+    // MARK: - Accessibility
+
+    private var accessibilityDescription: String {
+        if isHidden { return "Keyboard hidden" }
+        if pressedMIDI.isEmpty { return "Keyboard, no keys pressed" }
+        let names = pressedMIDI.sorted().map(midiName).joined(separator: ", ")
+        return "Keyboard, pressed: \(names)"
+    }
+
+    private func midiName(_ midi: Int) -> String {
+        let pc = midi % 12
+        let octave = midi / 12 - 1
+        let names = ["C", "C-sharp", "D", "E-flat", "E", "F", "F-sharp", "G", "A-flat", "A", "B-flat", "B"]
+        return "\(names[pc])\(octave)"
     }
 
     private func drawKeyboard(in context: inout GraphicsContext, size: CGSize) {
@@ -98,7 +134,7 @@ public struct KeyboardView: View {
             } else if isStaccato {
                 fill = pressedColor.opacity(0.5)
             } else {
-                fill = Color(white: 0.98)
+                fill = whiteKeyFill
             }
             context.fill(Path(rect), with: .color(fill))
             context.stroke(Path(rect), with: .color(.primary.opacity(0.25)), lineWidth: 0.5)
@@ -122,7 +158,7 @@ public struct KeyboardView: View {
             } else if isStaccato {
                 fill = pressedColor.opacity(0.5)
             } else {
-                fill = Color(white: 0.12)
+                fill = blackKeyFill
             }
             context.fill(Path(rect), with: .color(fill))
             context.stroke(Path(rect), with: .color(.primary.opacity(0.4)), lineWidth: 0.5)

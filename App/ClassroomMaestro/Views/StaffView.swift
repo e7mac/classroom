@@ -10,6 +10,8 @@ public struct StaffView: View {
     public let showKeySignature: Bool
     public let staffSpacing: CGFloat
 
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
     public init(
         notes: [Note],
         keySignature: KeySignature = .cMajor,
@@ -51,7 +53,7 @@ public struct StaffView: View {
             draw(in: &context, size: size, geometry: geo)
         }
         .frame(minHeight: geo.totalHeight(for: clef) + 30)
-        .animation(.easeInOut(duration: 0.18), value: notes)
+        .animation(.reduceMotionAware(.easeInOut(duration: 0.18), reduceMotion: reduceMotion), value: notes)
         .accessibilityLabel(accessibilityDescription)
         .onAppear { BravuraFont.registerIfNeeded() }
     }

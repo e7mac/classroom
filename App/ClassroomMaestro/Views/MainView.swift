@@ -115,6 +115,7 @@ struct MainView: View {
             .help(container.midiActive
                   ? "MIDI is on — click to see connected devices"
                   : "MIDI is off")
+            .accessibilityLabel("MIDI device list, currently \(container.midiDevices.count) devices")
 
             Toggle(isOn: Binding(
                 get: { container.acousticEnabled },
@@ -186,11 +187,12 @@ struct MainView: View {
 
     private func chordChip(_ chord: Chord) -> some View {
         Text(chord.symbol)
-            .font(.system(size: 16, weight: .medium, design: .rounded))
+            .font(.system(.body, design: .rounded).weight(.medium))
             .padding(.horizontal, 10)
             .padding(.vertical, 4)
             .background(.regularMaterial)
             .clipShape(Capsule())
+            .accessibilityLabel(chord.symbol)
     }
 }
 

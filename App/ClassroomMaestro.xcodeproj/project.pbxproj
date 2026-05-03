@@ -27,6 +27,7 @@
 		A283A3A445502613308720F4 /* StaffWidgetContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05200C3B8B73646FD082ECB4 /* StaffWidgetContent.swift */; };
 		A65D959460EEC06725CA93B6 /* MusicTheory in Frameworks */ = {isa = PBXBuildFile; productRef = 9293CB440121A7865EB2B327 /* MusicTheory */; };
 		A70ECD8DC7232318835AAB54 /* LayoutPreset.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B19C38192B07A79F203581 /* LayoutPreset.swift */; };
+		AC885667936DDADD4D47CF42 /* AccessibilityHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D6E9A4ABC93E7E16199AB7 /* AccessibilityHelpers.swift */; };
 		AF5AFD16B5EE1DE44ABEAFED /* ComboWidgetContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E85B2B2CEEB75CF04B068CD2 /* ComboWidgetContent.swift */; };
 		B07EA63B01943656AEDF078D /* KeyboardShortcuts.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2C62E20E5D6349DEE9BF1B0 /* KeyboardShortcuts.swift */; };
 		B9AC326D22F73E4A52D5B6EB /* ClassroomMaestroApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BB0725D7CCC19562939C39 /* ClassroomMaestroApp.swift */; };
@@ -67,6 +68,7 @@
 		B33CBDCB01FE497516A2D20E /* BravuraFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BravuraFont.swift; sourceTree = "<group>"; };
 		D0B19C38192B07A79F203581 /* LayoutPreset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutPreset.swift; sourceTree = "<group>"; };
 		DBE34051C26776D9AAF206B2 /* GrandStaffWidgetContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrandStaffWidgetContent.swift; sourceTree = "<group>"; };
+		E2D6E9A4ABC93E7E16199AB7 /* AccessibilityHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibilityHelpers.swift; sourceTree = "<group>"; };
 		E85B2B2CEEB75CF04B068CD2 /* ComboWidgetContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComboWidgetContent.swift; sourceTree = "<group>"; };
 		F2C62E20E5D6349DEE9BF1B0 /* KeyboardShortcuts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardShortcuts.swift; sourceTree = "<group>"; };
 		F8BB1B028A54AA4DF1B805A9 /* ClassroomMaestro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ClassroomMaestro.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -154,6 +156,7 @@
 		82ACD6CCAA6C0E8B486F54DE /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				E2D6E9A4ABC93E7E16199AB7 /* AccessibilityHelpers.swift */,
 				22592665E10CB13F8714DFB6 /* AnalysisOverlayView.swift */,
 				B33CBDCB01FE497516A2D20E /* BravuraFont.swift */,
 				674502C854976E40A706C35F /* KeyboardView.swift */,
@@ -283,6 +286,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AC885667936DDADD4D47CF42 /* AccessibilityHelpers.swift in Sources */,
 				982243898DD58DF3FEB5C899 /* AnalysisOverlayView.swift in Sources */,
 				3C44842620A584BF684E175E /* AnalysisWidgetContent.swift in Sources */,
 				C0FA35B78D3C34E7896A7C07 /* AppStateBindings.swift in Sources */,

@@ -1,4 +1,5 @@
 import SwiftUI
+import AppKit
 import AppCore
 import MusicTheory
 import MusicRendering
@@ -21,6 +22,19 @@ struct ClassroomMaestroApp: App {
         }
         .windowStyle(.titleBar)
         .commands {
+            CommandGroup(replacing: .appInfo) {
+                Button("About ClassroomMaestro") {
+                    NSApp.orderFrontStandardAboutPanel(options: [
+                        .applicationName: "ClassroomMaestro",
+                        .applicationVersion: "0.1.0",
+                        .credits: NSAttributedString(
+                            string: "Music education classroom display tool.\nUses Bravura SMuFL font (SIL OFL).",
+                            attributes: [.foregroundColor: NSColor.secondaryLabelColor]
+                        )
+                    ])
+                }
+            }
+
             CommandGroup(after: .toolbar) {
                 Button("Open Key Signature Picker") {
                     NotificationCenter.default.post(name: .openKeySignaturePicker, object: nil)

@@ -7,6 +7,8 @@ public struct AnalysisOverlayView: View {
     public let displayMode: AnalysisDisplayMode
     public let isVisible: Bool
 
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
     public init(
         analysis: Analysis,
         displayMode: AnalysisDisplayMode = .popJazz,
@@ -23,8 +25,8 @@ public struct AnalysisOverlayView: View {
                 .padding(16)
                 .background(.regularMaterial)
                 .cornerRadius(12)
-                .animation(.easeInOut(duration: 0.18), value: primaryText)
-                .animation(.easeInOut(duration: 0.18), value: secondaryText)
+                .animation(.reduceMotionAware(.easeInOut(duration: 0.18), reduceMotion: reduceMotion), value: primaryText)
+                .animation(.reduceMotionAware(.easeInOut(duration: 0.18), reduceMotion: reduceMotion), value: secondaryText)
         } else {
             EmptyView()
         }
@@ -34,7 +36,8 @@ public struct AnalysisOverlayView: View {
     private var content: some View {
         VStack(spacing: 4) {
             Text(primaryText)
-                .font(.system(size: 56, weight: .semibold, design: .rounded))
+                .font(.system(.largeTitle, design: .rounded).weight(.semibold))
+                .minimumScaleFactor(0.5)
                 .foregroundStyle(analysis.isEmpty ? .secondary : .primary)
                 .multilineTextAlignment(.center)
                 .contentTransition(.opacity)
@@ -42,7 +45,7 @@ public struct AnalysisOverlayView: View {
 
             if let secondaryText {
                 Text(secondaryText)
-                    .font(.system(size: 16, weight: .regular))
+                    .font(.subheadline)
                     .foregroundStyle(.secondary)
                     .multilineTextAlignment(.center)
                     .contentTransition(.opacity)
@@ -96,7 +99,20 @@ public struct AnalysisOverlayView: View {
     }
 
     private var accessibilityDescription: String {
-        if analysis.isEmpty { return "No analysis" }
+        if analysis.isEmpty { return "Analysis: no content" }
+        if let chord = analysis.chord {
+            let long = longChordName(chord)
+            if let roman = analysis.romanNumeral?.displayString {
+                return "Analysis: \(long) chord, Roman numeral \(roman)"
+            }
+            return "Analysis: \(long) chord"
+        }
+        if let interval = analysis.interval {
+            return "Analysis: \(longIntervalName(interval))"
+        }
+        if let scale = analysis.scale {
+            return "Analysis: \(scale.tonic.description) \(scale.name) scale"
+        }
         if let secondaryText {
             return "\(primaryText). \(secondaryText)"
         }
