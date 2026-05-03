@@ -1,6 +1,7 @@
 import SwiftUI
 import MusicTheory
 import MusicRendering
+import AppCore
 
 @main
 struct ClassroomMaestroApp: App {
@@ -16,6 +17,10 @@ struct ClassroomMaestroApp: App {
 struct ContentView: View {
     @State private var notes: [Note] = []
 
+    private var pressedMIDI: Set<Int> {
+        Set(notes.map(\.midiNumber))
+    }
+
     var body: some View {
         VStack(spacing: 16) {
             Text("ClassroomMaestro")
@@ -27,6 +32,13 @@ struct ContentView: View {
                 clef: .grand
             )
             .frame(maxWidth: 640, minHeight: 280)
+
+            KeyboardView(
+                pressedMIDI: pressedMIDI,
+                lowMIDI: 48,
+                highMIDI: 84
+            )
+            .frame(maxWidth: 640, minHeight: 100, maxHeight: 120)
 
             HStack {
                 Button("C major") {
@@ -41,7 +53,7 @@ struct ContentView: View {
             }
         }
         .padding()
-        .frame(minWidth: 720, minHeight: 480)
+        .frame(minWidth: 720, minHeight: 540)
     }
 }
 

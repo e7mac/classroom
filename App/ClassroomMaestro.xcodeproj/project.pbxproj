@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		3351BA897E4E69B374DCF366 /* AudioInput in Frameworks */ = {isa = PBXBuildFile; productRef = F6D22BE49BA0934B52AB042C /* AudioInput */; };
 		75CDC5B6E55FC6994F511653 /* MusicRendering in Frameworks */ = {isa = PBXBuildFile; productRef = 349B8741901FF35063AC0108 /* MusicRendering */; };
+		798DA0585A3A401E9B545EE1 /* KeyboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 674502C854976E40A706C35F /* KeyboardView.swift */; };
 		8F3CE08289A2AEDEF0F717CC /* Bravura-LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 6F97600CE81D2C8D1002D167 /* Bravura-LICENSE.txt */; };
 		A65D959460EEC06725CA93B6 /* MusicTheory in Frameworks */ = {isa = PBXBuildFile; productRef = 9293CB440121A7865EB2B327 /* MusicTheory */; };
 		B9AC326D22F73E4A52D5B6EB /* ClassroomMaestroApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BB0725D7CCC19562939C39 /* ClassroomMaestroApp.swift */; };
@@ -22,6 +23,7 @@
 		09F9436FACEACD29A77A5235 /* StaffView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaffView.swift; sourceTree = "<group>"; };
 		3C3DD95E3941A78B48F1A223 /* ClassroomCore */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ClassroomCore; path = ../Packages/ClassroomCore; sourceTree = SOURCE_ROOT; };
 		48F6ABE21277A36DEFEC9B81 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		674502C854976E40A706C35F /* KeyboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardView.swift; sourceTree = "<group>"; };
 		6F97600CE81D2C8D1002D167 /* Bravura-LICENSE.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "Bravura-LICENSE.txt"; sourceTree = "<group>"; };
 		71D1D135887476F395335FE1 /* Bravura.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Bravura.otf; sourceTree = "<group>"; };
 		85A4373604EA9B6F6BC550C5 /* ClassroomMaestro.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ClassroomMaestro.entitlements; sourceTree = "<group>"; };
@@ -103,6 +105,7 @@
 			isa = PBXGroup;
 			children = (
 				B33CBDCB01FE497516A2D20E /* BravuraFont.swift */,
+				674502C854976E40A706C35F /* KeyboardView.swift */,
 				09F9436FACEACD29A77A5235 /* StaffView.swift */,
 			);
 			path = Views;
@@ -222,6 +225,7 @@
 			files = (
 				EC3A15C384D5483D43665CFF /* BravuraFont.swift in Sources */,
 				B9AC326D22F73E4A52D5B6EB /* ClassroomMaestroApp.swift in Sources */,
+				798DA0585A3A401E9B545EE1 /* KeyboardView.swift in Sources */,
 				CA2444FAE4C6DE825426934A /* StaffView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
