@@ -52,7 +52,7 @@ public final class AppState: ObservableObject {
     public init(
         theory: MusicTheoryEngine = .init(),
         keySignature: KeySignature = .cMajor,
-        displayMode: DisplayMode = .singleNote,
+        displayMode: DisplayMode = .chord,
         clefMode: StaffLayout.Clef = .grand
     ) {
         self.theory = theory

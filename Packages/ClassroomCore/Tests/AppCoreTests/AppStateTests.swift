@@ -32,9 +32,9 @@ struct AppStateTests {
         #expect(state.progression.isEmpty)
     }
 
-    @Test func initialModeIsSingleNote() {
+    @Test func initialModeIsChord() {
         let state = AppState()
-        #expect(state.displayMode == .singleNote)
+        #expect(state.displayMode == .chord)
     }
 
     @Test func initialKeyIsCMajor() {
@@ -89,14 +89,14 @@ struct AppStateTests {
     // MARK: - SingleNote mode
 
     @Test func singleNoteShowsLatestNoteOn() {
-        let state = AppState()
+        let state = AppState(displayMode: .singleNote)
         state.handle(midiNoteOn(60))
         state.handle(midiNoteOn(64))
         #expect(state.displayedNotes == [Note(pitchClass: .e, octave: 4)])
     }
 
     @Test func singleNoteRevertsToPriorHeldOnRelease() {
-        let state = AppState()
+        let state = AppState(displayMode: .singleNote)
         state.handle(midiNoteOn(60))
         state.handle(midiNoteOn(64))
         state.handle(midiNoteOff(64))
