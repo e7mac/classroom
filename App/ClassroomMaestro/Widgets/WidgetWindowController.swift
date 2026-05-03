@@ -83,7 +83,14 @@ final class WidgetWindowController {
     }
 
     func close() {
+        removeObservers()
         panel.close()
+    }
+
+    private func removeObservers() {
+        let nc = NotificationCenter.default
+        for obs in observers { nc.removeObserver(obs) }
+        observers.removeAll()
     }
 
     func setOpacity(_ value: Double) {
@@ -104,9 +111,8 @@ final class WidgetWindowController {
     }
 
     deinit {
-        // NotificationCenter.removeObserver is thread-safe, so calling it from a
-        // non-isolated deinit is fine even though `observers` lives on @MainActor.
-        let nc = NotificationCenter.default
-        for obs in observers { nc.removeObserver(obs) }
+        // Observers are removed in close() (called before the controller is released
+        // by WidgetManager). Touching @MainActor-isolated state from a non-isolated
+        // deinit isn't allowed under Swift 6 strict concurrency anyway.
     }
 }
