@@ -131,31 +131,30 @@ public struct StaffView: View {
     // MARK: - Clefs
 
     private func drawClefs(in context: inout GraphicsContext, geometry geo: StaffLayout.Geometry) {
-        // Bravura is designed so 1 em = 4 staff spaces. Sizing the font at staffSpacing*4
-        // makes glyph metrics align naturally to the staff. SMuFL clef glyphs have their
-        // baseline at the staff line they reference (G4 for treble, F3 for bass), so we
-        // draw with a `.bottom` anchor at that line's y position.
+        // Bravura: 1 em = 4 staff spaces. Em box is centered on the baseline, so drawing
+        // with `.center` anchor at the staff line a clef references puts the glyph
+        // approximately right. Y nudges below absorb any per-glyph asymmetry.
         let fontSize = geo.staffSpacing * 4.0
         let clefX: CGFloat = 36
 
         if clefSet.showsTreble {
-            let trebleBaseline = geo.trebleStaffTopY + 3 * geo.staffSpacing
+            let trebleY = geo.trebleStaffTopY + 3 * geo.staffSpacing
             let txt = context.resolve(
                 Text(BravuraFont.Glyph.trebleClef)
                     .font(.custom(BravuraFont.name, size: fontSize))
                     .foregroundColor(.primary)
             )
-            context.draw(txt, at: CGPoint(x: clefX, y: trebleBaseline), anchor: .bottom)
+            context.draw(txt, at: CGPoint(x: clefX, y: trebleY), anchor: .center)
         }
 
         if clefSet.showsBass {
-            let bassBaseline = geo.bassStaffTopY + geo.staffSpacing
+            let bassY = geo.bassStaffTopY + geo.staffSpacing
             let txt = context.resolve(
                 Text(BravuraFont.Glyph.bassClef)
                     .font(.custom(BravuraFont.name, size: fontSize))
                     .foregroundColor(.primary)
             )
-            context.draw(txt, at: CGPoint(x: clefX, y: bassBaseline), anchor: .bottom)
+            context.draw(txt, at: CGPoint(x: clefX, y: bassY), anchor: .center)
         }
     }
 
