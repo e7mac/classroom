@@ -34,48 +34,68 @@ public struct StaffView: View {
         )
     }
 
-    /// Extra space reserved above the top staff line so ledger lines and
-    /// noteheads on high notes (e.g. C7) aren't clipped at the top of the canvas.
+    /// Fixed headroom above the top staff line. Staff position must NOT move
+    /// based on what's being played — that's distracting (especially on iPad
+    /// where the frame shifts visibly). Notes outside this fixed window get
+    /// rendered with 8va / 8vb octave markers (see drawNotes).
     private var ledgerHeadroomAboveStaff: CGFloat {
-        // Default 30pt + 1 staffSpacing per ledger line slot we might need.
-        // Cap so the staff doesn't drift absurdly far down for a single C8.
-        let extraSlots = max(0, maxLedgerSlotsAboveTopLine())
-        return 30 + CGFloat(min(extraSlots, 8)) * staffSpacing
+        // Reserve a constant 5 ledger-line slots above + base padding.
+        // Anything higher (~A6+) gets transposed down with an 8va indicator.
+        30 + 5 * staffSpacing
     }
 
-    /// Extra space reserved below the bottom staff line for low-note ledger lines.
     private var ledgerFootroomBelowStaff: CGFloat {
-        let extraSlots = max(0, maxLedgerSlotsBelowBottomLine())
-        return 30 + CGFloat(min(extraSlots, 8)) * staffSpacing
+        // Same idea below: constant 5 slots; anything lower gets 8vb.
+        30 + 5 * staffSpacing
     }
 
-    private func maxLedgerSlotsAboveTopLine() -> Int {
-        // Treble top line is F5 (diatonic step 5*7+3 = 38).
-        // Each diatonic step above adds half a staff space; ledger lines occur
-        // every two steps. 1 ledger line = 2 steps above F5.
-        let topLineStep = 5 * 7 + 3   // F5
-        let highestStep = notes.map { staffLayoutStep(for: $0) }.max() ?? topLineStep
-        let stepsAbove = max(0, highestStep - topLineStep)
-        return Int(ceil(Double(stepsAbove) / 2.0))
-    }
-
-    private func maxLedgerSlotsBelowBottomLine() -> Int {
-        // Bass bottom line is G2 (diatonic step 2*7+4 = 18).
-        // For grand or treble, the lowest visible reference is bass G2 if grand,
-        // treble E4 (28) if treble-only.
-        let bottomLineStep: Int
+    /// Pitch ranges that fit comfortably WITHOUT octave transposition, given
+    /// the fixed headroom above. Notes outside this window are rendered an
+    /// octave (or two) closer to the staff with an 8va/8vb marker.
+    private func octaveAdjusted(_ note: Note) -> (note: Note, octaveShift: Int) {
+        let step = note.octave * 7 + note.pitchClass.rawValue
         switch clef {
-        case .treble: bottomLineStep = 4 * 7 + 2  // E4
-        case .bass:   bottomLineStep = 2 * 7 + 4  // G2
-        case .grand:  bottomLineStep = 2 * 7 + 4  // G2
+        case .treble:
+            // Top line F5 = step 38; with 5 ledger slots = ~10 steps above = step 48 = G6
+            // Bottom line E4 = step 30; 5 slots = ~10 below = step 20 = D2 (well below treble use)
+            if step > 48 {
+                let shifts = (step - 48 + 6) / 7   // round up to nearest octave
+                return (transposed(note, byOctaves: -shifts), shifts)
+            }
+            if step < 20 {
+                let shifts = (20 - step + 6) / 7
+                return (transposed(note, byOctaves: shifts), -shifts)
+            }
+        case .bass:
+            // Bass top A3 = step 24; bottom G2 = step 18
+            // 5 slots above top = step 34 = E5
+            // 5 slots below bottom = step 8 = B0
+            if step > 34 {
+                let shifts = (step - 34 + 6) / 7
+                return (transposed(note, byOctaves: -shifts), shifts)
+            }
+            if step < 8 {
+                let shifts = (8 - step + 6) / 7
+                return (transposed(note, byOctaves: shifts), -shifts)
+            }
+        case .grand:
+            // Grand staff covers everything from bass through treble; only really
+            // extreme notes (>C7 or <A0) need transposition.
+            // C7 = step 49; A0 = step 14
+            if step > 49 {
+                let shifts = (step - 49 + 6) / 7
+                return (transposed(note, byOctaves: -shifts), shifts)
+            }
+            if step < 14 {
+                let shifts = (14 - step + 6) / 7
+                return (transposed(note, byOctaves: shifts), -shifts)
+            }
         }
-        let lowestStep = notes.map { staffLayoutStep(for: $0) }.min() ?? bottomLineStep
-        let stepsBelow = max(0, bottomLineStep - lowestStep)
-        return Int(ceil(Double(stepsBelow) / 2.0))
+        return (note, 0)
     }
 
-    private func staffLayoutStep(for note: Note) -> Int {
-        note.octave * 7 + note.pitchClass.rawValue
+    private func transposed(_ note: Note, byOctaves shifts: Int) -> Note {
+        Note(pitchClass: note.pitchClass, accidental: note.accidental, octave: note.octave + shifts)
     }
 
     private var clefSet: ClefSet { ClefSet(clef: clef) }
@@ -254,25 +274,33 @@ public struct StaffView: View {
 
     private func drawNotes(in context: inout GraphicsContext, size: CGSize, geometry geo: StaffLayout.Geometry) {
         guard !notes.isEmpty else { return }
-        let layouts = notes.map { StaffLayout.layout($0, clef: clef, geometry: geo) }
+
+        // Transpose any extreme notes into the visible window so the staff
+        // doesn't have to grow vertically. Track the shift per note for the
+        // 8va / 8vb marker.
+        let adjusted: [(layout: StaffLayout.NoteLayout, shift: Int)] = notes.map {
+            let (n, shift) = octaveAdjusted($0)
+            return (StaffLayout.layout(n, clef: clef, geometry: geo), shift)
+        }
 
         let noteAreaStart = clefAreaWidth + keySignatureAreaWidth + 16
         let noteAreaEnd = max(size.width - 16, noteAreaStart + 40)
 
-        for (i, layout) in layouts.enumerated() {
+        for (i, item) in adjusted.enumerated() {
             let x: CGFloat
-            if layouts.count == 1 {
+            if adjusted.count == 1 {
                 x = noteAreaStart + (noteAreaEnd - noteAreaStart) / 2
             } else {
-                let spacing = (noteAreaEnd - noteAreaStart) / CGFloat(layouts.count + 1)
+                let spacing = (noteAreaEnd - noteAreaStart) / CGFloat(adjusted.count + 1)
                 x = noteAreaStart + spacing * CGFloat(i + 1)
             }
-            drawNote(layout, at: x, in: &context, geometry: geo)
+            drawNote(item.layout, octaveShift: item.shift, at: x, in: &context, geometry: geo)
         }
     }
 
     private func drawNote(
         _ layout: StaffLayout.NoteLayout,
+        octaveShift: Int,
         at x: CGFloat,
         in context: inout GraphicsContext,
         geometry geo: StaffLayout.Geometry
@@ -324,6 +352,63 @@ public struct StaffView: View {
             )
             context.draw(txt, at: CGPoint(x: x + acc.x, y: acc.y), anchor: .center)
         }
+
+        if octaveShift != 0 {
+            drawOctaveMarker(
+                shift: octaveShift,
+                noteX: x,
+                noteY: layout.y,
+                in: &context,
+                geometry: geo
+            )
+        }
+    }
+
+    private func drawOctaveMarker(
+        shift: Int,
+        noteX: CGFloat,
+        noteY: CGFloat,
+        in context: inout GraphicsContext,
+        geometry geo: StaffLayout.Geometry
+    ) {
+        // Convention: 8va = sounds an octave higher, drawn ABOVE the note.
+        //             15ma = two octaves higher.
+        //             8vb = sounds an octave lower, drawn BELOW the note.
+        //             15mb = two octaves lower.
+        // We use absolute shift to pick the symbol; sign to pick above/below.
+        let label: String
+        switch abs(shift) {
+        case 1: label = "8"
+        case 2: label = "15"
+        default: label = "\(abs(shift) * 7 + 1)"   // 22 for 3 octaves, etc.
+        }
+        let suffix = shift > 0 ? "va" : "vb"
+
+        let isAbove = shift > 0
+        let yOffset: CGFloat = isAbove
+            ? -(geo.staffSpacing * 4.5)
+            :  (geo.staffSpacing * 4.5)
+        let labelY = noteY + yOffset
+
+        let combined = "\(label)\(suffix)"
+        let txt = context.resolve(
+            Text(combined)
+                .font(.system(size: geo.staffSpacing * 1.4, weight: .semibold).italic())
+                .foregroundColor(.primary)
+        )
+        context.draw(txt, at: CGPoint(x: noteX, y: labelY), anchor: .center)
+
+        // Dashed line from the marker to the notehead — shows it applies to this note.
+        var dash = Path()
+        let lineStart = CGPoint(x: noteX, y: labelY + (isAbove ? geo.staffSpacing * 0.7 : -geo.staffSpacing * 0.7))
+        let lineEnd   = CGPoint(x: noteX, y: noteY + (isAbove ? -geo.staffSpacing * 0.6 : geo.staffSpacing * 0.6))
+        dash.move(to: lineStart)
+        dash.addLine(to: lineEnd)
+        context.stroke(
+            dash,
+            with: .color(.primary.opacity(0.7)),
+            style: StrokeStyle(lineWidth: 1, dash: [3, 2])
+        )
     }
 }
 
