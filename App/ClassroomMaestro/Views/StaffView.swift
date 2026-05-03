@@ -53,6 +53,7 @@ public struct StaffView: View {
         .frame(minHeight: geo.totalHeight(for: clef) + 30)
         .animation(.easeInOut(duration: 0.18), value: notes)
         .accessibilityLabel(accessibilityDescription)
+        .onAppear { BravuraFont.registerIfNeeded() }
     }
 
     // MARK: - Accessibility
@@ -130,26 +131,31 @@ public struct StaffView: View {
     // MARK: - Clefs
 
     private func drawClefs(in context: inout GraphicsContext, geometry geo: StaffLayout.Geometry) {
-        // Font multiplier 4.0 visually fills the 4-spacing staff height for treble/bass glyphs.
-        let clefFontSize = geo.staffSpacing * 4.0
-        let clefX: CGFloat = 30
+        // Bravura is designed so 1 em = 4 staff spaces. Sizing the font at staffSpacing*4
+        // makes glyph metrics align naturally to the staff. SMuFL clef glyphs have their
+        // baseline at the staff line they reference (G4 for treble, F3 for bass), so we
+        // draw with a `.bottom` anchor at that line's y position.
+        let fontSize = geo.staffSpacing * 4.0
+        let clefX: CGFloat = 36
 
         if clefSet.showsTreble {
-            // Treble clef glyph (𝄞) anchors to the G4 line — line 2 from bottom = trebleStaffTopY + 3 * spacing.
-            let trebleY = geo.trebleStaffTopY + 3 * geo.staffSpacing
+            let trebleBaseline = geo.trebleStaffTopY + 3 * geo.staffSpacing
             let txt = context.resolve(
-                Text("𝄞").font(.system(size: clefFontSize)).foregroundColor(.primary)
+                Text(BravuraFont.Glyph.trebleClef)
+                    .font(.custom(BravuraFont.name, size: fontSize))
+                    .foregroundColor(.primary)
             )
-            context.draw(txt, at: CGPoint(x: clefX, y: trebleY))
+            context.draw(txt, at: CGPoint(x: clefX, y: trebleBaseline), anchor: .bottom)
         }
 
         if clefSet.showsBass {
-            // Bass clef glyph (𝄢) anchors to the F3 line — line 4 from top of bass staff = bassStaffTopY + spacing.
-            let bassY = geo.bassStaffTopY + geo.staffSpacing
+            let bassBaseline = geo.bassStaffTopY + geo.staffSpacing
             let txt = context.resolve(
-                Text("𝄢").font(.system(size: clefFontSize)).foregroundColor(.primary)
+                Text(BravuraFont.Glyph.bassClef)
+                    .font(.custom(BravuraFont.name, size: fontSize))
+                    .foregroundColor(.primary)
             )
-            context.draw(txt, at: CGPoint(x: clefX, y: bassY))
+            context.draw(txt, at: CGPoint(x: clefX, y: bassBaseline), anchor: .bottom)
         }
     }
 
@@ -157,39 +163,45 @@ public struct StaffView: View {
 
     private func drawKeySignature(in context: inout GraphicsContext, geometry geo: StaffLayout.Geometry) {
         guard showKeySignature, !keySignature.sharpsAndFlats.isEmpty else { return }
-        // 2.2x font multiplier sized so accidentals fit between staff lines without crowding.
-        let fontSize = geo.staffSpacing * 2.2
+        let fontSize = geo.staffSpacing * 4.0
         let startX = clefAreaWidth
 
         if clefSet.showsTreble {
-            let glyphs = StaffLayout.keySignatureGlyphs(
-                keySignature,
-                clef: .treble,
-                geometry: geo,
-                startX: startX,
-                glyphSpacing: keySignatureGlyphSpacing
+            drawAccidentals(
+                glyphs: StaffLayout.keySignatureGlyphs(
+                    keySignature, clef: .treble, geometry: geo,
+                    startX: startX, glyphSpacing: keySignatureGlyphSpacing
+                ),
+                fontSize: fontSize,
+                context: &context
             )
-            for g in glyphs {
-                let txt = context.resolve(
-                    Text(g.symbol).font(.system(size: fontSize)).foregroundColor(.primary)
-                )
-                context.draw(txt, at: CGPoint(x: g.x, y: g.y))
-            }
         }
         if clefSet.showsBass {
-            let glyphs = StaffLayout.keySignatureGlyphs(
-                keySignature,
-                clef: .bass,
-                geometry: geo,
-                startX: startX,
-                glyphSpacing: keySignatureGlyphSpacing
+            drawAccidentals(
+                glyphs: StaffLayout.keySignatureGlyphs(
+                    keySignature, clef: .bass, geometry: geo,
+                    startX: startX, glyphSpacing: keySignatureGlyphSpacing
+                ),
+                fontSize: fontSize,
+                context: &context
             )
-            for g in glyphs {
-                let txt = context.resolve(
-                    Text(g.symbol).font(.system(size: fontSize)).foregroundColor(.primary)
-                )
-                context.draw(txt, at: CGPoint(x: g.x, y: g.y))
-            }
+        }
+    }
+
+    private func drawAccidentals(
+        glyphs: [StaffLayout.GlyphPlacement],
+        fontSize: CGFloat,
+        context: inout GraphicsContext
+    ) {
+        for g in glyphs {
+            let smufl = BravuraFont.smufl(forAccidentalSymbol: g.symbol)
+            let txt = context.resolve(
+                Text(smufl)
+                    .font(.custom(BravuraFont.name, size: fontSize))
+                    .foregroundColor(.primary)
+            )
+            // Bravura accidentals center vertically on the staff line/space they belong to.
+            context.draw(txt, at: CGPoint(x: g.x, y: g.y), anchor: .center)
         }
     }
 
@@ -259,11 +271,13 @@ public struct StaffView: View {
         }
 
         if let acc = layout.accidental {
-            // 1.8x font multiplier for accidental glyphs balances visibility vs. crowding the notehead.
+            let smufl = BravuraFont.smufl(forAccidentalSymbol: acc.symbol)
             let txt = context.resolve(
-                Text(acc.symbol).font(.system(size: geo.staffSpacing * 1.8)).foregroundColor(.primary)
+                Text(smufl)
+                    .font(.custom(BravuraFont.name, size: geo.staffSpacing * 4.0))
+                    .foregroundColor(.primary)
             )
-            context.draw(txt, at: CGPoint(x: x + acc.x, y: acc.y))
+            context.draw(txt, at: CGPoint(x: x + acc.x, y: acc.y), anchor: .center)
         }
     }
 }

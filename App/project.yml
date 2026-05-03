@@ -49,6 +49,7 @@ targets:
         LSMinimumSystemVersion: "14.0"
         NSMicrophoneUsageDescription: "ClassroomMaestro listens to your acoustic piano to display the notes you play in real time."
         NSHighResolutionCapable: true
+        ATSApplicationFontsPath: "."
     entitlements:
       path: ClassroomMaestro/ClassroomMaestro.entitlements
       properties:
