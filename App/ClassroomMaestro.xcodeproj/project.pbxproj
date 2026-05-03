@@ -11,10 +11,12 @@
 		75CDC5B6E55FC6994F511653 /* MusicRendering in Frameworks */ = {isa = PBXBuildFile; productRef = 349B8741901FF35063AC0108 /* MusicRendering */; };
 		A65D959460EEC06725CA93B6 /* MusicTheory in Frameworks */ = {isa = PBXBuildFile; productRef = 9293CB440121A7865EB2B327 /* MusicTheory */; };
 		B9AC326D22F73E4A52D5B6EB /* ClassroomMaestroApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BB0725D7CCC19562939C39 /* ClassroomMaestroApp.swift */; };
+		CA2444FAE4C6DE825426934A /* StaffView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F9436FACEACD29A77A5235 /* StaffView.swift */; };
 		D3036C86B8C45D10CB2E88F6 /* AppCore in Frameworks */ = {isa = PBXBuildFile; productRef = 2DB2950455BDB319E7B3CCDB /* AppCore */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		09F9436FACEACD29A77A5235 /* StaffView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaffView.swift; sourceTree = "<group>"; };
 		3C3DD95E3941A78B48F1A223 /* ClassroomCore */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ClassroomCore; path = ../Packages/ClassroomCore; sourceTree = SOURCE_ROOT; };
 		48F6ABE21277A36DEFEC9B81 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		85A4373604EA9B6F6BC550C5 /* ClassroomMaestro.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ClassroomMaestro.entitlements; sourceTree = "<group>"; };
@@ -94,6 +96,7 @@
 		82ACD6CCAA6C0E8B486F54DE /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				09F9436FACEACD29A77A5235 /* StaffView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -196,6 +199,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B9AC326D22F73E4A52D5B6EB /* ClassroomMaestroApp.swift in Sources */,
+				CA2444FAE4C6DE825426934A /* StaffView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
