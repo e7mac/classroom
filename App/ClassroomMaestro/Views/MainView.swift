@@ -41,8 +41,8 @@ struct MainView: View {
             KeyboardView(
                 pressedMIDI: appState.activeMIDINotes,
                 handPosition: appState.handPosition,
-                lowMIDI: 48,
-                highMIDI: 84
+                lowMIDI: 21,
+                highMIDI: 108
             )
             .frame(maxWidth: 720, minHeight: 100, maxHeight: 120)
             RecentHistoryStrip(appState: appState)

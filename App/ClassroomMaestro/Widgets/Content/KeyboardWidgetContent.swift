@@ -13,8 +13,8 @@ struct KeyboardWidgetContent: View {
             KeyboardView(
                 pressedMIDI: appState.activeMIDINotes,
                 handPosition: appState.handPosition,
-                lowMIDI: isExpanded ? 36 : 48,
-                highMIDI: isExpanded ? 96 : 84
+                lowMIDI: 21,
+                highMIDI: 108
             )
             .frame(maxWidth: .infinity, maxHeight: .infinity)
         }

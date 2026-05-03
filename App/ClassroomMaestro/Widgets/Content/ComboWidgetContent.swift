@@ -23,8 +23,8 @@ struct ComboWidgetContent: View {
                 KeyboardView(
                     pressedMIDI: appState.activeMIDINotes,
                     handPosition: appState.handPosition,
-                    lowMIDI: 48,
-                    highMIDI: 84
+                    lowMIDI: 21,
+                    highMIDI: 108
                 )
                 .frame(maxWidth: .infinity, minHeight: 60, maxHeight: 90)
             }
