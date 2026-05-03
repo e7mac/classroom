@@ -7,6 +7,7 @@ final class AppStateContainer: ObservableObject {
     let appState: AppState
     let midiEngine: MIDIEngine
     let acousticDetector: AcousticPitchDetector
+    let widgetManager: WidgetManager
 
     @Published var midiDevices: [MIDIDevice] = []
     @Published var inputLevel: Float = 0
@@ -19,9 +20,11 @@ final class AppStateContainer: ObservableObject {
     private var acousticLevelTask: Task<Void, Never>?
 
     init() {
-        self.appState = AppState()
+        let appState = AppState()
+        self.appState = appState
         self.midiEngine = MIDIEngine()
         self.acousticDetector = AcousticPitchDetector()
+        self.widgetManager = WidgetManager(appState: appState)
     }
 
     func startMIDI() async {

@@ -25,6 +25,7 @@ struct MainView: View {
                 onCycleEnharmonic: { appState.cycleEnharmonic() },
                 onClearProgression: { appState.clearProgression() }
             )
+            WidgetDockView(manager: container.widgetManager)
             AnalysisOverlayView(
                 analysis: appState.lastAnalysis,
                 displayMode: appState.analysisDisplayMode,
@@ -55,6 +56,7 @@ struct MainView: View {
         }
         .onDisappear {
             shortcuts?.uninstall()
+            container.widgetManager.closeAll()
         }
         .onReceive(NotificationCenter.default.publisher(for: .openKeySignaturePicker)) { _ in
             keySignaturePopoverVisible = true
@@ -194,4 +196,28 @@ struct MainView: View {
         .environmentObject(container)
         .environmentObject(container.appState)
         .frame(width: 900, height: 720)
+}
+
+struct WidgetDockView: View {
+    @ObservedObject var manager: WidgetManager
+
+    var body: some View {
+        HStack(spacing: 8) {
+            Text("Widgets:")
+                .font(.caption)
+                .foregroundStyle(.secondary)
+            ForEach(WidgetKind.allCases) { kind in
+                Toggle(isOn: Binding(
+                    get: { manager.openWidgets.contains(kind) },
+                    set: { _ in manager.toggle(kind) }
+                )) {
+                    Image(systemName: kind.sfSymbol)
+                }
+                .toggleStyle(.button)
+                .help(kind.displayName)
+                .accessibilityLabel("\(kind.displayName) widget")
+            }
+        }
+        .padding(.horizontal, 8)
+    }
 }

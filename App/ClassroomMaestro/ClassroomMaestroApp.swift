@@ -16,6 +16,7 @@ struct ClassroomMaestroApp: App {
                 .frame(minWidth: 900, minHeight: 720)
                 .task {
                     await container.startMIDI()
+                    container.widgetManager.restorePreviouslyOpenWidgets()
                 }
         }
         .windowStyle(.titleBar)
