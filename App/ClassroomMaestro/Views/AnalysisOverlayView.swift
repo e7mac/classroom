@@ -20,13 +20,12 @@ public struct AnalysisOverlayView: View {
     }
 
     public var body: some View {
-        // Always render the card with a fixed minimum height so the layout
-        // doesn't jump when an analysis appears or disappears.
+        // Fixed height keeps the surrounding VStack stable: when chord/subtitle
+        // appears or disappears the card neither grows nor shrinks.
         content
             .frame(maxWidth: .infinity)
-            .frame(minHeight: 92)
+            .frame(height: 96)
             .padding(.horizontal, 16)
-            .padding(.vertical, 12)
             .background(.regularMaterial)
             .cornerRadius(12)
             .opacity(isVisible ? 1 : 0)
