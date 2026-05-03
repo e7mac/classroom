@@ -2,9 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:App/ClassroomMaestro.xcodeproj">
+      location = "container:App/ClassroomMaestro.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:Packages/ClassroomCore">
+      location = "container:Packages/ClassroomCore">
    </FileRef>
 </Workspace>
