@@ -12,6 +12,7 @@ public final class AppState: ObservableObject {
     @Published public private(set) var displayedNotes: [Note] = []
     @Published public private(set) var lastAnalysis: Analysis = .empty
     @Published public private(set) var progression: [Chord] = []
+    @Published public private(set) var recentHistory: [HistoryEntry] = []
 
     // MARK: - Published configuration
 
@@ -100,6 +101,10 @@ public final class AppState: ObservableObject {
 
     public func clearProgression() {
         progression = []
+    }
+
+    public func clearRecentHistory() {
+        recentHistory = []
     }
 
     public func toggleCapsLockFreeze() {
@@ -194,8 +199,34 @@ public final class AppState: ObservableObject {
 
         let sortedActive = activeMIDINotes.sorted()
         let newDisplayed = computeDisplayedNotes(from: sortedActive)
+        let newAnalysis = computeAnalysis(for: newDisplayed)
+
+        // Capture the just-played snapshot in recent history when the user releases
+        // (active set goes from non-empty to empty). One entry per "release event."
+        if newDisplayed.isEmpty, !displayedNotes.isEmpty,
+           let label = historyLabel(for: displayedNotes, analysis: lastAnalysis) {
+            appendHistory(label: label)
+        }
+
         displayedNotes = newDisplayed
-        lastAnalysis = computeAnalysis(for: newDisplayed)
+        lastAnalysis = newAnalysis
+    }
+
+    private func historyLabel(for notes: [Note], analysis: Analysis) -> String? {
+        if let chord = analysis.chord { return chord.symbol }
+        if let interval = analysis.interval { return interval.shortName }
+        if let scale = analysis.scale {
+            return "\(scale.tonic.pitchClass.letterName)\(scale.tonic.accidental.displaySymbol) \(scale.name)"
+        }
+        if let note = notes.first { return note.description }
+        return nil
+    }
+
+    private func appendHistory(label: String) {
+        recentHistory.append(HistoryEntry(label: label))
+        if recentHistory.count > 12 {
+            recentHistory.removeFirst(recentHistory.count - 12)
+        }
     }
 
     private func computeDisplayedNotes(from sortedActive: [Int]) -> [Note] {

@@ -45,6 +45,8 @@ struct MainView: View {
                 highMIDI: 84
             )
             .frame(maxWidth: 720, minHeight: 100, maxHeight: 120)
+            RecentHistoryStrip(appState: appState)
+                .frame(maxWidth: 720)
             progressionStrip
             Spacer(minLength: 0)
         }
