@@ -43,9 +43,21 @@ public struct KeyboardView: View {
                 let needsScroll = intrinsicWidth > availableWidth
 
                 if needsScroll {
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        keyboardCanvas(width: intrinsicWidth, height: availableHeight)
-                            .frame(width: intrinsicWidth, height: availableHeight)
+                    ScrollViewReader { scrollProxy in
+                        ScrollView(.horizontal, showsIndicators: false) {
+                            keyboardCanvas(width: intrinsicWidth, height: availableHeight)
+                                .frame(width: intrinsicWidth, height: availableHeight)
+                                .overlay(alignment: .leading) {
+                                    // Invisible anchor at middle C — tells ScrollViewReader where to center.
+                                    Color.clear
+                                        .frame(width: 1, height: 1)
+                                        .offset(x: middleCXOffset(intrinsicWidth: intrinsicWidth))
+                                        .id("centerAnchor")
+                                }
+                        }
+                        .onAppear {
+                            scrollProxy.scrollTo("centerAnchor", anchor: .center)
+                        }
                     }
                 } else {
                     keyboardCanvas(width: availableWidth, height: availableHeight)
@@ -55,6 +67,19 @@ public struct KeyboardView: View {
             .accessibilityElement(children: .ignore)
             .accessibilityLabel(accessibilityDescription)
         }
+    }
+
+    private func middleCXOffset(intrinsicWidth: CGFloat) -> CGFloat {
+        // Center on middle C (MIDI 60) if it's within the visible range; otherwise the midpoint.
+        let centerMIDI = (lowMIDI...highMIDI).contains(60) ? 60 : (lowMIDI + highMIDI) / 2
+        let rect = KeyboardLayout.keyRect(
+            for: centerMIDI,
+            lowMIDI: lowMIDI,
+            highMIDI: highMIDI,
+            totalWidth: intrinsicWidth,
+            totalHeight: 1
+        )
+        return rect.midX
     }
 
     // White-key aspect ratio: ~1:5 (height:width) for a tighter on-screen
