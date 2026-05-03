@@ -73,7 +73,9 @@ final class WidgetWindowController {
         })
         observers.append(nc.addObserver(forName: NSWindow.willCloseNotification, object: panel, queue: .main) { [weak self] _ in
             MainActor.assumeIsolated {
-                self?.onClose?()
+                guard let self else { return }
+                self.onClose?()
+                self.removeObservers()
             }
         })
     }
@@ -83,7 +85,8 @@ final class WidgetWindowController {
     }
 
     func close() {
-        removeObservers()
+        // Observers are removed by handlePanelWillClose (triggered by panel.close()),
+        // so the willClose callback still fires before they're torn down.
         panel.close()
     }
 
