@@ -28,12 +28,19 @@ final class KeyboardShortcutsMonitor {
 
     func install() {
         guard monitor == nil else { return }
-        // Local NSEvent monitors are invoked on the main thread, so we can safely
-        // hop into MainActor isolation synchronously to touch our state and AppState.
+        // The local NSEvent callback is documented to run on the main thread, but its
+        // type isn't @MainActor-annotated and NSEvent isn't Sendable, so we extract
+        // the Sendable bits synchronously and dispatch the handler onto the main actor.
         monitor = NSEvent.addLocalMonitorForEvents(matching: [.keyDown, .flagsChanged]) { [weak self] event in
-            MainActor.assumeIsolated {
-                self?.handle(event) ?? event
+            let snapshot = EventSnapshot(
+                type: event.type,
+                modifierFlags: event.modifierFlags,
+                charactersIgnoringModifiers: event.charactersIgnoringModifiers
+            )
+            let consumed = MainActor.assumeIsolated {
+                self?.handle(snapshot) ?? false
             }
+            return consumed ? nil : event
         }
     }
 
@@ -44,8 +51,15 @@ final class KeyboardShortcutsMonitor {
         monitor = nil
     }
 
-    private func handle(_ event: NSEvent) -> NSEvent? {
-        guard let appState else { return event }
+    private struct EventSnapshot: Sendable {
+        let type: NSEvent.EventType
+        let modifierFlags: NSEvent.ModifierFlags
+        let charactersIgnoringModifiers: String?
+    }
+
+    /// Returns true if the event should be consumed (not forwarded to the system).
+    private func handle(_ event: EventSnapshot) -> Bool {
+        guard let appState else { return false }
 
         if event.type == .flagsChanged {
             let capsOn = event.modifierFlags.contains(.capsLock)
@@ -53,39 +67,39 @@ final class KeyboardShortcutsMonitor {
                 lastCapsLockState = capsOn
                 appState.toggleCapsLockFreeze()
             }
-            return event
+            return false
         }
 
         // Pure single-letter shortcuts only — defer to system on any modifier.
         let modifiers = event.modifierFlags.intersection([.command, .control, .option])
-        guard modifiers.isEmpty else { return event }
+        guard modifiers.isEmpty else { return false }
 
-        guard let chars = event.charactersIgnoringModifiers?.lowercased() else { return event }
+        guard let chars = event.charactersIgnoringModifiers?.lowercased() else { return false }
         switch chars {
         case "a":
             appState.analysisOverlayVisible.toggle()
-            return nil
+            return true
         case "e":
             appState.cycleEnharmonic()
-            return nil
+            return true
         case "k":
             switch appState.clefMode {
             case .treble: appState.clefMode = .grand
             case .grand:  appState.clefMode = .bass
             case .bass:   appState.clefMode = .treble
             }
-            return nil
+            return true
         case "s":
             appState.hideKeySignatureFromStaff.toggle()
-            return nil
+            return true
         case "1", "2", "3", "4", "5", "6":
             if let raw = Int(chars), let mode = DisplayMode(rawValue: raw) {
                 appState.displayMode = mode
-                return nil
+                return true
             }
-            return event
+            return false
         default:
-            return event
+            return false
         }
     }
 }
