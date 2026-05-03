@@ -73,11 +73,12 @@ public struct KeyboardView: View {
         }
         .frame(width: width, height: height)
         .background(keyboardBackground)
-        .clipShape(RoundedRectangle(cornerRadius: 4))
+        .clipShape(RoundedRectangle(cornerRadius: 6))
         .overlay(
-            RoundedRectangle(cornerRadius: 4)
-                .stroke(Color.primary.opacity(0.3), lineWidth: 1)
+            RoundedRectangle(cornerRadius: 6)
+                .stroke(Color.primary.opacity(0.35), lineWidth: 1)
         )
+        .shadow(color: .black.opacity(0.18), radius: 3, x: 0, y: 2)
         .animation(.reduceMotionAware(.easeOut(duration: 0.08), reduceMotion: reduceMotion), value: pressedMIDI)
         .animation(.reduceMotionAware(.easeOut(duration: 0.08), reduceMotion: reduceMotion), value: staccatoMIDI)
     }
@@ -85,16 +86,21 @@ public struct KeyboardView: View {
     // MARK: - Theme-aware colors
 
     private var keyboardBackground: Color {
-        Color(NSColor.windowBackgroundColor)
+        // Dark "felt strip" sliver visible above the keys (the rest is hidden by the keys).
+        Color(NSColor.black).opacity(0.7)
     }
 
-    private var whiteKeyFill: Color {
-        Color(NSColor.controlBackgroundColor)
-    }
+    private var whiteKeyTopColor: Color { Color(white: 1.0) }
+    private var whiteKeyBottomColor: Color { Color(red: 0.96, green: 0.95, blue: 0.92) }   // warm ivory
+    private var whiteKeyPressedTopColor: Color { Color(red: 0.86, green: 0.90, blue: 0.98) }
+    private var whiteKeyPressedBottomColor: Color { Color(red: 0.72, green: 0.80, blue: 0.94) }
+    private var whiteKeySeparatorColor: Color { Color.black.opacity(0.18) }
 
-    private var blackKeyFill: Color {
-        Color(NSColor.controlTextColor).opacity(0.85)
-    }
+    private var blackKeyTopColor: Color { Color(white: 0.18) }
+    private var blackKeyBottomColor: Color { Color(white: 0.04) }
+    private var blackKeyPressedTopColor: Color { Color(red: 0.30, green: 0.45, blue: 0.65) }
+    private var blackKeyPressedBottomColor: Color { Color(red: 0.10, green: 0.20, blue: 0.40) }
+    private var blackKeyHighlightColor: Color { Color.white.opacity(0.18) }
 
     // MARK: - Accessibility
 
@@ -116,6 +122,7 @@ public struct KeyboardView: View {
         let totalWidth = size.width
         let totalHeight = size.height
 
+        // White keys first.
         for midi in lowMIDI...highMIDI {
             guard !KeyboardLayout.isBlackKey(midi) else { continue }
             let rect = KeyboardLayout.keyRect(
@@ -125,21 +132,10 @@ public struct KeyboardView: View {
                 totalWidth: totalWidth,
                 totalHeight: totalHeight
             )
-            let isPressed = pressedMIDI.contains(midi)
-            let isStaccato = staccatoMIDI.contains(midi)
-
-            let fill: Color
-            if isPressed {
-                fill = pressedColor
-            } else if isStaccato {
-                fill = pressedColor.opacity(0.5)
-            } else {
-                fill = whiteKeyFill
-            }
-            context.fill(Path(rect), with: .color(fill))
-            context.stroke(Path(rect), with: .color(.primary.opacity(0.25)), lineWidth: 0.5)
+            drawWhiteKey(rect: rect, midi: midi, in: &context)
         }
 
+        // Then black keys on top.
         for midi in lowMIDI...highMIDI {
             guard KeyboardLayout.isBlackKey(midi) else { continue }
             let rect = KeyboardLayout.keyRect(
@@ -149,19 +145,7 @@ public struct KeyboardView: View {
                 totalWidth: totalWidth,
                 totalHeight: totalHeight
             )
-            let isPressed = pressedMIDI.contains(midi)
-            let isStaccato = staccatoMIDI.contains(midi)
-
-            let fill: Color
-            if isPressed {
-                fill = pressedColor
-            } else if isStaccato {
-                fill = pressedColor.opacity(0.5)
-            } else {
-                fill = blackKeyFill
-            }
-            context.fill(Path(rect), with: .color(fill))
-            context.stroke(Path(rect), with: .color(.primary.opacity(0.4)), lineWidth: 0.5)
+            drawBlackKey(rect: rect, midi: midi, in: &context)
         }
 
         if let handPosition,
@@ -178,6 +162,99 @@ public struct KeyboardView: View {
         }
 
         drawOctaveLabels(in: &context, size: size)
+    }
+
+    private func drawWhiteKey(rect: CGRect, midi: Int, in context: inout GraphicsContext) {
+        let isPressed = pressedMIDI.contains(midi)
+        let isStaccato = staccatoMIDI.contains(midi)
+
+        // Thin gap between adjacent white keys for the felt-strip look.
+        let inset = rect.insetBy(dx: 0.5, dy: 0)
+        let bodyShape = RoundedRectangle(cornerRadius: 3, style: .continuous)
+        let path = bodyShape.path(in: inset)
+
+        let topColor = isPressed ? whiteKeyPressedTopColor : whiteKeyTopColor
+        let bottomColor = isPressed ? whiteKeyPressedBottomColor : whiteKeyBottomColor
+
+        let gradient = Gradient(colors: [topColor, bottomColor])
+        context.fill(
+            path,
+            with: .linearGradient(
+                gradient,
+                startPoint: CGPoint(x: inset.midX, y: inset.minY),
+                endPoint: CGPoint(x: inset.midX, y: inset.maxY)
+            )
+        )
+
+        // Subtle pressed-in shadow at the top edge.
+        if isPressed {
+            let shadowRect = CGRect(x: inset.minX, y: inset.minY, width: inset.width, height: 4)
+            context.fill(Path(shadowRect), with: .color(.black.opacity(0.18)))
+        }
+
+        // Staccato glow overlay.
+        if isStaccato && !isPressed {
+            context.fill(path, with: .color(pressedColor.opacity(0.35)))
+        }
+
+        // Vertical separator on the right edge.
+        var sep = Path()
+        sep.move(to: CGPoint(x: rect.maxX - 0.5, y: rect.minY))
+        sep.addLine(to: CGPoint(x: rect.maxX - 0.5, y: rect.maxY))
+        context.stroke(sep, with: .color(whiteKeySeparatorColor), lineWidth: 0.5)
+    }
+
+    private func drawBlackKey(rect: CGRect, midi: Int, in context: inout GraphicsContext) {
+        let isPressed = pressedMIDI.contains(midi)
+        let isStaccato = staccatoMIDI.contains(midi)
+
+        // Black keys are slightly inset and have rounded bottom corners.
+        let inset = rect.insetBy(dx: 0.5, dy: 0)
+        let bodyShape = UnevenRoundedRectangle(
+            cornerRadii: .init(
+                topLeading: 0,
+                bottomLeading: 3,
+                bottomTrailing: 3,
+                topTrailing: 0
+            ),
+            style: .continuous
+        )
+        let path = bodyShape.path(in: inset)
+
+        let topColor = isPressed ? blackKeyPressedTopColor : blackKeyTopColor
+        let bottomColor = isPressed ? blackKeyPressedBottomColor : blackKeyBottomColor
+
+        let gradient = Gradient(colors: [topColor, bottomColor])
+        context.fill(
+            path,
+            with: .linearGradient(
+                gradient,
+                startPoint: CGPoint(x: inset.midX, y: inset.minY),
+                endPoint: CGPoint(x: inset.midX, y: inset.maxY)
+            )
+        )
+
+        // Specular highlight on the top face for the bevel feel.
+        let highlightRect = CGRect(
+            x: inset.minX + 1,
+            y: inset.minY,
+            width: inset.width - 2,
+            height: max(2, inset.height * 0.06)
+        )
+        context.fill(Path(highlightRect), with: .color(blackKeyHighlightColor))
+
+        // Soft shadow under the key onto the white keys below.
+        let shadowRect = CGRect(
+            x: rect.minX,
+            y: rect.maxY - 1,
+            width: rect.width,
+            height: 2
+        )
+        context.fill(Path(shadowRect), with: .color(.black.opacity(0.25)))
+
+        if isStaccato && !isPressed {
+            context.fill(path, with: .color(pressedColor.opacity(0.4)))
+        }
     }
 
     private func drawHandBracket(in context: inout GraphicsContext, rect: CGRect, fingerCount: Int) {
@@ -220,9 +297,9 @@ public struct KeyboardView: View {
             let txt = context.resolve(
                 Text(label)
                     .font(.system(size: fontSize, weight: .medium))
-                    .foregroundColor(.secondary)
+                    .foregroundColor(Color(white: 0.35))
             )
-            context.draw(txt, at: CGPoint(x: rect.midX, y: rect.maxY - 10), anchor: .bottom)
+            context.draw(txt, at: CGPoint(x: rect.midX, y: rect.maxY - 6), anchor: .bottom)
         }
     }
 
