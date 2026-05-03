@@ -11,15 +11,20 @@
 		107945D345D6D22A4D8C69D8 /* WidgetFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E67D90E7F882236A5EA2D36 /* WidgetFrame.swift */; };
 		23904CF908B51350C96B121B /* WidgetWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C64C2484B34879DDB2492E /* WidgetWindowController.swift */; };
 		3351BA897E4E69B374DCF366 /* AudioInput in Frameworks */ = {isa = PBXBuildFile; productRef = F6D22BE49BA0934B52AB042C /* AudioInput */; };
+		3C44842620A584BF684E175E /* AnalysisWidgetContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E05FBD5EA92636A7875212 /* AnalysisWidgetContent.swift */; };
+		458111E607CEE2D596653EA8 /* KeyboardWidgetContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77935CFE855240C642CE2000 /* KeyboardWidgetContent.swift */; };
 		5A32B9AE673FA15E4A8C8A29 /* WidgetKind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FF17B28A22E6C3DC44850A /* WidgetKind.swift */; };
 		5D35AAC238324B9D55ED2559 /* ToolPaletteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A925C293E3260E971380815 /* ToolPaletteView.swift */; };
+		652F46823D86930EE94B4B6A /* WidgetChrome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 289716DE0B5E5DE4FA66BC51 /* WidgetChrome.swift */; };
 		69D7A1EFBC38E5A8BB2C70F9 /* WidgetManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE3F827A8C774EC694B02663 /* WidgetManager.swift */; };
 		75CDC5B6E55FC6994F511653 /* MusicRendering in Frameworks */ = {isa = PBXBuildFile; productRef = 349B8741901FF35063AC0108 /* MusicRendering */; };
 		798DA0585A3A401E9B545EE1 /* KeyboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 674502C854976E40A706C35F /* KeyboardView.swift */; };
 		8F3CE08289A2AEDEF0F717CC /* Bravura-LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 6F97600CE81D2C8D1002D167 /* Bravura-LICENSE.txt */; };
 		9506FAFF5A1539D3CDA82E3F /* KeySignaturePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A900284C74A53565E2C03C5 /* KeySignaturePicker.swift */; };
 		982243898DD58DF3FEB5C899 /* AnalysisOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22592665E10CB13F8714DFB6 /* AnalysisOverlayView.swift */; };
+		A283A3A445502613308720F4 /* StaffWidgetContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05200C3B8B73646FD082ECB4 /* StaffWidgetContent.swift */; };
 		A65D959460EEC06725CA93B6 /* MusicTheory in Frameworks */ = {isa = PBXBuildFile; productRef = 9293CB440121A7865EB2B327 /* MusicTheory */; };
+		AF5AFD16B5EE1DE44ABEAFED /* ComboWidgetContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E85B2B2CEEB75CF04B068CD2 /* ComboWidgetContent.swift */; };
 		B07EA63B01943656AEDF078D /* KeyboardShortcuts.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2C62E20E5D6349DEE9BF1B0 /* KeyboardShortcuts.swift */; };
 		B9AC326D22F73E4A52D5B6EB /* ClassroomMaestroApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BB0725D7CCC19562939C39 /* ClassroomMaestroApp.swift */; };
 		B9C2871FC619A2CE020FE922 /* Bravura.otf in Resources */ = {isa = PBXBuildFile; fileRef = 71D1D135887476F395335FE1 /* Bravura.otf */; };
@@ -28,11 +33,14 @@
 		CA2444FAE4C6DE825426934A /* StaffView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F9436FACEACD29A77A5235 /* StaffView.swift */; };
 		D3036C86B8C45D10CB2E88F6 /* AppCore in Frameworks */ = {isa = PBXBuildFile; productRef = 2DB2950455BDB319E7B3CCDB /* AppCore */; };
 		EC3A15C384D5483D43665CFF /* BravuraFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = B33CBDCB01FE497516A2D20E /* BravuraFont.swift */; };
+		F8F0E16E45A0EB9A67ABB864 /* GrandStaffWidgetContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBE34051C26776D9AAF206B2 /* GrandStaffWidgetContent.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		05200C3B8B73646FD082ECB4 /* StaffWidgetContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaffWidgetContent.swift; sourceTree = "<group>"; };
 		09F9436FACEACD29A77A5235 /* StaffView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaffView.swift; sourceTree = "<group>"; };
 		22592665E10CB13F8714DFB6 /* AnalysisOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalysisOverlayView.swift; sourceTree = "<group>"; };
+		289716DE0B5E5DE4FA66BC51 /* WidgetChrome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetChrome.swift; sourceTree = "<group>"; };
 		2A900284C74A53565E2C03C5 /* KeySignaturePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeySignaturePicker.swift; sourceTree = "<group>"; };
 		2E67D90E7F882236A5EA2D36 /* WidgetFrame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetFrame.swift; sourceTree = "<group>"; };
 		332BBC007F8B67D3EAAF537D /* FloatingPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingPanel.swift; sourceTree = "<group>"; };
@@ -44,12 +52,16 @@
 		674502C854976E40A706C35F /* KeyboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardView.swift; sourceTree = "<group>"; };
 		6F97600CE81D2C8D1002D167 /* Bravura-LICENSE.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "Bravura-LICENSE.txt"; sourceTree = "<group>"; };
 		71D1D135887476F395335FE1 /* Bravura.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Bravura.otf; sourceTree = "<group>"; };
+		77935CFE855240C642CE2000 /* KeyboardWidgetContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardWidgetContent.swift; sourceTree = "<group>"; };
 		8408B21D6FACF1941778139C /* AppStateBindings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStateBindings.swift; sourceTree = "<group>"; };
 		85A4373604EA9B6F6BC550C5 /* ClassroomMaestro.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ClassroomMaestro.entitlements; sourceTree = "<group>"; };
 		93BB0725D7CCC19562939C39 /* ClassroomMaestroApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassroomMaestroApp.swift; sourceTree = "<group>"; };
+		93E05FBD5EA92636A7875212 /* AnalysisWidgetContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalysisWidgetContent.swift; sourceTree = "<group>"; };
 		97C64C2484B34879DDB2492E /* WidgetWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetWindowController.swift; sourceTree = "<group>"; };
 		AE3F827A8C774EC694B02663 /* WidgetManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetManager.swift; sourceTree = "<group>"; };
 		B33CBDCB01FE497516A2D20E /* BravuraFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BravuraFont.swift; sourceTree = "<group>"; };
+		DBE34051C26776D9AAF206B2 /* GrandStaffWidgetContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrandStaffWidgetContent.swift; sourceTree = "<group>"; };
+		E85B2B2CEEB75CF04B068CD2 /* ComboWidgetContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComboWidgetContent.swift; sourceTree = "<group>"; };
 		F2C62E20E5D6349DEE9BF1B0 /* KeyboardShortcuts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardShortcuts.swift; sourceTree = "<group>"; };
 		F8BB1B028A54AA4DF1B805A9 /* ClassroomMaestro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ClassroomMaestro.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -147,6 +159,12 @@
 		891A85317615DED1A80718DB /* Content */ = {
 			isa = PBXGroup;
 			children = (
+				93E05FBD5EA92636A7875212 /* AnalysisWidgetContent.swift */,
+				E85B2B2CEEB75CF04B068CD2 /* ComboWidgetContent.swift */,
+				DBE34051C26776D9AAF206B2 /* GrandStaffWidgetContent.swift */,
+				77935CFE855240C642CE2000 /* KeyboardWidgetContent.swift */,
+				05200C3B8B73646FD082ECB4 /* StaffWidgetContent.swift */,
+				289716DE0B5E5DE4FA66BC51 /* WidgetChrome.swift */,
 			);
 			path = Content;
 			sourceTree = "<group>";
@@ -257,16 +275,22 @@
 			buildActionMask = 2147483647;
 			files = (
 				982243898DD58DF3FEB5C899 /* AnalysisOverlayView.swift in Sources */,
+				3C44842620A584BF684E175E /* AnalysisWidgetContent.swift in Sources */,
 				C0FA35B78D3C34E7896A7C07 /* AppStateBindings.swift in Sources */,
 				EC3A15C384D5483D43665CFF /* BravuraFont.swift in Sources */,
 				B9AC326D22F73E4A52D5B6EB /* ClassroomMaestroApp.swift in Sources */,
+				AF5AFD16B5EE1DE44ABEAFED /* ComboWidgetContent.swift in Sources */,
 				05F4A1CCBA423857B824362E /* FloatingPanel.swift in Sources */,
+				F8F0E16E45A0EB9A67ABB864 /* GrandStaffWidgetContent.swift in Sources */,
 				9506FAFF5A1539D3CDA82E3F /* KeySignaturePicker.swift in Sources */,
 				B07EA63B01943656AEDF078D /* KeyboardShortcuts.swift in Sources */,
 				798DA0585A3A401E9B545EE1 /* KeyboardView.swift in Sources */,
+				458111E607CEE2D596653EA8 /* KeyboardWidgetContent.swift in Sources */,
 				C2DDE76AC9A75B2C288AA010 /* MainView.swift in Sources */,
 				CA2444FAE4C6DE825426934A /* StaffView.swift in Sources */,
+				A283A3A445502613308720F4 /* StaffWidgetContent.swift in Sources */,
 				5D35AAC238324B9D55ED2559 /* ToolPaletteView.swift in Sources */,
+				652F46823D86930EE94B4B6A /* WidgetChrome.swift in Sources */,
 				107945D345D6D22A4D8C69D8 /* WidgetFrame.swift in Sources */,
 				5A32B9AE673FA15E4A8C8A29 /* WidgetKind.swift in Sources */,
 				69D7A1EFBC38E5A8BB2C70F9 /* WidgetManager.swift in Sources */,

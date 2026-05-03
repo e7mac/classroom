@@ -30,9 +30,9 @@ final class WidgetManager: ObservableObject {
         guard controllers[kind] == nil else { return }
         let frame = loadFrame(for: kind) ?? defaultFrame(for: kind)
         let appState = self.appState
+        let manager = self
         let controller = WidgetWindowController(kind: kind, initialFrame: frame) {
-            WidgetPlaceholderView(kind: kind)
-                .environmentObject(appState)
+            widgetContent(for: kind, manager: manager, appState: appState)
         }
         controller.onFrameChange = { [weak self] rect in
             guard let self else { return }
@@ -160,68 +160,25 @@ final class WidgetManager: ObservableObject {
     }
 }
 
-// MARK: - Placeholder content (M12 stub; real widget views land in M13)
-
-private struct WidgetPlaceholderView: View {
-    let kind: WidgetKind
-    @State private var opacity: Double = 1.0
-    @State private var clickThrough: Bool = false
-    @EnvironmentObject private var appState: AppState
-
-    var body: some View {
-        ZStack {
-            VisualEffectBackground(material: .hudWindow, blendingMode: .behindWindow)
-            VStack(spacing: 8) {
-                HStack {
-                    Image(systemName: kind.sfSymbol)
-                    Text(kind.displayName)
-                        .font(.headline)
-                    Spacer()
-                }
-                Spacer()
-                Text("\(kind.displayName)Widget — coming in M13")
-                    .foregroundStyle(.secondary)
-                    .font(.callout)
-                Spacer()
-                widgetControls
-            }
-            .padding(10)
-        }
-    }
-
-    // M12 STUB: this slider visually adjusts the panel via its bound state but
-    // does NOT call WidgetManager.setOpacity, so opacity changes do not persist
-    // across app launches. The proper wiring (slider -> WidgetManager) lands in
-    // M13 when each widget gets a real content view that can receive the
-    // WidgetManager via @EnvironmentObject.
-    private var widgetControls: some View {
-        HStack(spacing: 8) {
-            Slider(value: $opacity, in: 0.5...1.0)
-                .frame(width: 100)
-                .help("Opacity (stub – will persist in M13)")
-            Toggle(isOn: $clickThrough) {
-                Image(systemName: clickThrough ? "cursorarrow.slash" : "cursorarrow")
-            }
-            .toggleStyle(.button)
-            .help("Click-through (stub – will persist in M13)")
-        }
-    }
-}
-
-private struct VisualEffectBackground: NSViewRepresentable {
-    let material: NSVisualEffectView.Material
-    let blendingMode: NSVisualEffectView.BlendingMode
-
-    func makeNSView(context: Context) -> NSVisualEffectView {
-        let view = NSVisualEffectView()
-        view.material = material
-        view.blendingMode = blendingMode
-        view.state = .active
-        return view
-    }
-
-    func updateNSView(_ nsView: NSVisualEffectView, context: Context) {
-        nsView.material = material
-        nsView.blendingMode = blendingMode
+// Free function so the @ViewBuilder switch returns an opaque `some View`
+// without needing `AnyView` erasure inside WidgetManager.
+@ViewBuilder
+@MainActor
+private func widgetContent(
+    for kind: WidgetKind,
+    manager: WidgetManager,
+    appState: AppState
+) -> some View {
+    switch kind {
+    case .staff:
+        StaffWidgetContent(manager: manager, appState: appState)
+    case .grandStaff:
+        GrandStaffWidgetContent(manager: manager, appState: appState)
+    case .keyboard:
+        KeyboardWidgetContent(manager: manager, appState: appState)
+    case .analysis:
+        AnalysisWidgetContent(manager: manager, appState: appState)
+    case .combo:
+        ComboWidgetContent(manager: manager, appState: appState)
     }
 }
