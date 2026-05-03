@@ -20,16 +20,19 @@ public struct AnalysisOverlayView: View {
     }
 
     public var body: some View {
-        if isVisible {
-            content
-                .padding(16)
-                .background(.regularMaterial)
-                .cornerRadius(12)
-                .animation(.reduceMotionAware(.easeInOut(duration: 0.18), reduceMotion: reduceMotion), value: primaryText)
-                .animation(.reduceMotionAware(.easeInOut(duration: 0.18), reduceMotion: reduceMotion), value: secondaryText)
-        } else {
-            EmptyView()
-        }
+        // Always render the card with a fixed minimum height so the layout
+        // doesn't jump when an analysis appears or disappears.
+        content
+            .frame(maxWidth: .infinity)
+            .frame(minHeight: 92)
+            .padding(.horizontal, 16)
+            .padding(.vertical, 12)
+            .background(.regularMaterial)
+            .cornerRadius(12)
+            .opacity(isVisible ? 1 : 0)
+            .animation(.reduceMotionAware(.easeInOut(duration: 0.18), reduceMotion: reduceMotion), value: primaryText)
+            .animation(.reduceMotionAware(.easeInOut(duration: 0.18), reduceMotion: reduceMotion), value: secondaryText)
+            .animation(.reduceMotionAware(.easeInOut(duration: 0.18), reduceMotion: reduceMotion), value: isVisible)
     }
 
     @ViewBuilder
