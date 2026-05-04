@@ -275,32 +275,31 @@ public struct StaffView: View {
     private func drawNotes(in context: inout GraphicsContext, size: CGSize, geometry geo: StaffLayout.Geometry) {
         guard !notes.isEmpty else { return }
 
-        // Transpose any extreme notes into the visible window so the staff
-        // doesn't have to grow vertically. Track the shift per note for the
-        // 8va / 8vb marker.
-        let adjusted: [(layout: StaffLayout.NoteLayout, shift: Int)] = notes.map {
-            let (n, shift) = octaveAdjusted($0)
-            return (StaffLayout.layout(n, clef: clef, geometry: geo), shift)
+        // Transpose extreme notes into the visible window so the staff doesn't
+        // grow vertically. We don't show 8va/8vb markers for the transposition —
+        // the keyboard view below tells the user the real octave.
+        let layouts: [StaffLayout.NoteLayout] = notes.map {
+            let (n, _) = octaveAdjusted($0)
+            return StaffLayout.layout(n, clef: clef, geometry: geo)
         }
 
         let noteAreaStart = clefAreaWidth + keySignatureAreaWidth + 16
         let noteAreaEnd = max(size.width - 16, noteAreaStart + 40)
 
-        for (i, item) in adjusted.enumerated() {
+        for (i, layout) in layouts.enumerated() {
             let x: CGFloat
-            if adjusted.count == 1 {
+            if layouts.count == 1 {
                 x = noteAreaStart + (noteAreaEnd - noteAreaStart) / 2
             } else {
-                let spacing = (noteAreaEnd - noteAreaStart) / CGFloat(adjusted.count + 1)
+                let spacing = (noteAreaEnd - noteAreaStart) / CGFloat(layouts.count + 1)
                 x = noteAreaStart + spacing * CGFloat(i + 1)
             }
-            drawNote(item.layout, octaveShift: item.shift, at: x, in: &context, geometry: geo)
+            drawNote(layout, at: x, in: &context, geometry: geo)
         }
     }
 
     private func drawNote(
         _ layout: StaffLayout.NoteLayout,
-        octaveShift: Int,
         at x: CGFloat,
         in context: inout GraphicsContext,
         geometry geo: StaffLayout.Geometry
@@ -352,63 +351,6 @@ public struct StaffView: View {
             )
             context.draw(txt, at: CGPoint(x: x + acc.x, y: acc.y), anchor: .center)
         }
-
-        if octaveShift != 0 {
-            drawOctaveMarker(
-                shift: octaveShift,
-                noteX: x,
-                noteY: layout.y,
-                in: &context,
-                geometry: geo
-            )
-        }
-    }
-
-    private func drawOctaveMarker(
-        shift: Int,
-        noteX: CGFloat,
-        noteY: CGFloat,
-        in context: inout GraphicsContext,
-        geometry geo: StaffLayout.Geometry
-    ) {
-        // Convention: 8va = sounds an octave higher, drawn ABOVE the note.
-        //             15ma = two octaves higher.
-        //             8vb = sounds an octave lower, drawn BELOW the note.
-        //             15mb = two octaves lower.
-        // We use absolute shift to pick the symbol; sign to pick above/below.
-        let label: String
-        switch abs(shift) {
-        case 1: label = "8"
-        case 2: label = "15"
-        default: label = "\(abs(shift) * 7 + 1)"   // 22 for 3 octaves, etc.
-        }
-        let suffix = shift > 0 ? "va" : "vb"
-
-        let isAbove = shift > 0
-        let yOffset: CGFloat = isAbove
-            ? -(geo.staffSpacing * 4.5)
-            :  (geo.staffSpacing * 4.5)
-        let labelY = noteY + yOffset
-
-        let combined = "\(label)\(suffix)"
-        let txt = context.resolve(
-            Text(combined)
-                .font(.system(size: geo.staffSpacing * 1.4, weight: .semibold).italic())
-                .foregroundColor(.primary)
-        )
-        context.draw(txt, at: CGPoint(x: noteX, y: labelY), anchor: .center)
-
-        // Dashed line from the marker to the notehead — shows it applies to this note.
-        var dash = Path()
-        let lineStart = CGPoint(x: noteX, y: labelY + (isAbove ? geo.staffSpacing * 0.7 : -geo.staffSpacing * 0.7))
-        let lineEnd   = CGPoint(x: noteX, y: noteY + (isAbove ? -geo.staffSpacing * 0.6 : geo.staffSpacing * 0.6))
-        dash.move(to: lineStart)
-        dash.addLine(to: lineEnd)
-        context.stroke(
-            dash,
-            with: .color(.primary.opacity(0.7)),
-            style: StrokeStyle(lineWidth: 1, dash: [3, 2])
-        )
     }
 }
 
