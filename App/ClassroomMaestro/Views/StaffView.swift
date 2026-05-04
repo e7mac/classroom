@@ -285,17 +285,48 @@ public struct StaffView: View {
 
         let noteAreaStart = clefAreaWidth + keySignatureAreaWidth + 16
         let noteAreaEnd = max(size.width - 16, noteAreaStart + 40)
+        let centerX = (noteAreaStart + noteAreaEnd) / 2
+
+        // All displayed notes are sounding simultaneously, so render as a stacked
+        // chord at one x. Apply standard 2nd-interval offset: when two diatonic
+        // steps are adjacent, displace one notehead by ~one notehead width so
+        // the heads don't overlap. Compute by scanning the chord bottom-up.
+        let noteheadWidth = geo.staffSpacing * 1.3
+        let xOffsets = computeNoteheadXOffsets(for: adjusted.map(\.layout), staffSpacing: geo.staffSpacing)
 
         for (i, item) in adjusted.enumerated() {
-            let x: CGFloat
-            if adjusted.count == 1 {
-                x = noteAreaStart + (noteAreaEnd - noteAreaStart) / 2
-            } else {
-                let spacing = (noteAreaEnd - noteAreaStart) / CGFloat(adjusted.count + 1)
-                x = noteAreaStart + spacing * CGFloat(i + 1)
-            }
+            let x = centerX + xOffsets[i] * noteheadWidth
             drawNote(item.layout, octaveShift: item.shift, at: x, in: &context, geometry: geo)
         }
+    }
+
+    /// Returns one offset per input note (in input order). 0 = on the stem axis;
+    /// 1 = displaced one notehead-width to the right.
+    /// Convention: when two notes are adjacent diatonic steps (≤1 step apart on
+    /// the staff), the upper one shifts right; the lower stays on the axis.
+    private func computeNoteheadXOffsets(for layouts: [StaffLayout.NoteLayout], staffSpacing: CGFloat) -> [CGFloat] {
+        // Sort by y (top→bottom on screen, which is highest pitch first since y grows down).
+        let indexed = layouts.enumerated().map { ($0.offset, $0.element.y) }
+        let sorted = indexed.sorted { $0.1 < $1.1 }   // smallest y (highest pitch) first
+
+        var offsets = [CGFloat](repeating: 0, count: layouts.count)
+        // Walk pairs from the top down; when two adjacent notes are within 1 step
+        // (= staffSpacing/2) of each other, shift the lower one of the pair right.
+        // Half-spacing tolerance handles unisons too.
+        let stepThreshold = staffSpacing / 2 + 0.5
+        for i in 1..<sorted.count {
+            let prev = sorted[i - 1]
+            let curr = sorted[i]
+            if abs(curr.1 - prev.1) < stepThreshold {
+                // If the previous one isn't already shifted, shift this one.
+                if offsets[prev.0] == 0 {
+                    offsets[curr.0] = 1
+                } else {
+                    offsets[curr.0] = 0
+                }
+            }
+        }
+        return offsets
     }
 
     private func drawNote(
