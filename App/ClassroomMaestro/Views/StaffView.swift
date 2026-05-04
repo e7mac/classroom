@@ -275,31 +275,32 @@ public struct StaffView: View {
     private func drawNotes(in context: inout GraphicsContext, size: CGSize, geometry geo: StaffLayout.Geometry) {
         guard !notes.isEmpty else { return }
 
-        // Transpose extreme notes into the visible window so the staff doesn't
-        // grow vertically. We don't show 8va/8vb markers for the transposition —
-        // the keyboard view below tells the user the real octave.
-        let layouts: [StaffLayout.NoteLayout] = notes.map {
-            let (n, _) = octaveAdjusted($0)
-            return StaffLayout.layout(n, clef: clef, geometry: geo)
+        // Transpose extreme notes into the visible staff window so the staff
+        // itself doesn't grow vertically. Track the per-note shift so we can
+        // render an 8va / 8vb marker telling the user what was transposed.
+        let adjusted: [(layout: StaffLayout.NoteLayout, shift: Int)] = notes.map {
+            let (n, shift) = octaveAdjusted($0)
+            return (StaffLayout.layout(n, clef: clef, geometry: geo), shift)
         }
 
         let noteAreaStart = clefAreaWidth + keySignatureAreaWidth + 16
         let noteAreaEnd = max(size.width - 16, noteAreaStart + 40)
 
-        for (i, layout) in layouts.enumerated() {
+        for (i, item) in adjusted.enumerated() {
             let x: CGFloat
-            if layouts.count == 1 {
+            if adjusted.count == 1 {
                 x = noteAreaStart + (noteAreaEnd - noteAreaStart) / 2
             } else {
-                let spacing = (noteAreaEnd - noteAreaStart) / CGFloat(layouts.count + 1)
+                let spacing = (noteAreaEnd - noteAreaStart) / CGFloat(adjusted.count + 1)
                 x = noteAreaStart + spacing * CGFloat(i + 1)
             }
-            drawNote(layout, at: x, in: &context, geometry: geo)
+            drawNote(item.layout, octaveShift: item.shift, at: x, in: &context, geometry: geo)
         }
     }
 
     private func drawNote(
         _ layout: StaffLayout.NoteLayout,
+        octaveShift: Int,
         at x: CGFloat,
         in context: inout GraphicsContext,
         geometry geo: StaffLayout.Geometry
@@ -351,6 +352,49 @@ public struct StaffView: View {
             )
             context.draw(txt, at: CGPoint(x: x + acc.x, y: acc.y), anchor: .center)
         }
+
+        if octaveShift != 0 {
+            drawOctaveMarker(
+                shift: octaveShift,
+                noteX: x,
+                noteY: layout.y,
+                in: &context,
+                geometry: geo
+            )
+        }
+    }
+
+    private func drawOctaveMarker(
+        shift: Int,
+        noteX: CGFloat,
+        noteY: CGFloat,
+        in context: inout GraphicsContext,
+        geometry geo: StaffLayout.Geometry
+    ) {
+        // 8va = up an octave; 15ma = up two; 8vb = down; 15mb = down two.
+        let label: String
+        switch abs(shift) {
+        case 1: label = "8"
+        case 2: label = "15"
+        default: label = "\(abs(shift) * 7 + 1)"
+        }
+        let suffix = shift > 0 ? "va" : "vb"
+        let combined = "\(label)\(suffix)"
+
+        let isAbove = shift > 0
+        // Sit just above/below the notehead, not far away — keeps the marker
+        // visually attached to the note without pushing layout around.
+        let yOffset: CGFloat = isAbove
+            ? -(geo.staffSpacing * 1.6)
+            :  (geo.staffSpacing * 1.6)
+        let labelY = noteY + yOffset
+
+        let txt = context.resolve(
+            Text(combined)
+                .font(.system(size: geo.staffSpacing * 1.1, weight: .semibold).italic())
+                .foregroundColor(.primary.opacity(0.85))
+        )
+        context.draw(txt, at: CGPoint(x: noteX, y: labelY), anchor: .center)
     }
 }
 
