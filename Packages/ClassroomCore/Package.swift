@@ -31,7 +31,10 @@ let package = Package(
         ),
         .target(
             name: "AudioInput",
-            dependencies: ["ClassroomTheory"],
+            dependencies: [
+                "ClassroomTheory",
+                .product(name: "AudioEngine", package: "MusicCore"),
+            ],
             swiftSettings: [.swiftLanguageMode(.v6)]
         ),
         .target(
