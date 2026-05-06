@@ -73,7 +73,7 @@
 		E2D6E9A4ABC93E7E16199AB7 /* AccessibilityHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibilityHelpers.swift; sourceTree = "<group>"; };
 		E85B2B2CEEB75CF04B068CD2 /* ComboWidgetContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComboWidgetContent.swift; sourceTree = "<group>"; };
 		F2C62E20E5D6349DEE9BF1B0 /* KeyboardShortcuts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardShortcuts.swift; sourceTree = "<group>"; };
-		F8BB1B028A54AA4DF1B805A9 /* ClassroomMaestro.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = ClassroomMaestro.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F8BB1B028A54AA4DF1B805A9 /* ClassroomMaestro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ClassroomMaestro.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -245,7 +245,6 @@
 				LastUpgradeCheck = 1430;
 				TargetAttributes = {
 					A758740D7E7F1E347CFD2D6F = {
-						DevelopmentTeam = "";
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -328,6 +327,7 @@
 				CODE_SIGN_ENTITLEMENTS = ClassroomMaestro/ClassroomMaestro.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 232HCB982K;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = ClassroomMaestro/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -352,6 +352,7 @@
 				CODE_SIGN_ENTITLEMENTS = ClassroomMaestro/ClassroomMaestro.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 232HCB982K;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = ClassroomMaestro/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (

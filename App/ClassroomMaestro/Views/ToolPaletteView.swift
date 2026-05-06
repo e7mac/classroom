@@ -1,5 +1,5 @@
 import SwiftUI
-import MusicTheory
+import ClassroomTheory
 import MusicRendering
 import AppCore
 

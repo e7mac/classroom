@@ -1,5 +1,5 @@
 import SwiftUI
-import MusicTheory
+import ClassroomTheory
 import AppCore
 
 public struct AnalysisOverlayView: View {
@@ -64,9 +64,9 @@ public struct AnalysisOverlayView: View {
         if let chord = analysis.chord {
             switch displayMode {
             case .popJazz:
-                return chord.symbol
+                return chord.displayName
             case .romanNumeral:
-                return analysis.romanNumeral?.displayString ?? chord.symbol
+                return analysis.romanNumeral?.displayString ?? chord.displayName
             }
         }
 
@@ -89,7 +89,7 @@ public struct AnalysisOverlayView: View {
             case .popJazz:
                 return longChordName(chord)
             case .romanNumeral:
-                return chord.symbol
+                return chord.displayName
             }
         }
 

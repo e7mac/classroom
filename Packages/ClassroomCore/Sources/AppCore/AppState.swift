@@ -1,6 +1,6 @@
 import Foundation
 import Combine
-import MusicTheory
+import ClassroomTheory
 import MusicRendering
 import AudioInput
 
@@ -213,7 +213,7 @@ public final class AppState: ObservableObject {
     }
 
     private func historyLabel(for notes: [Note], analysis: Analysis) -> String? {
-        if let chord = analysis.chord { return chord.symbol }
+        if let chord = analysis.chord { return chord.displayName }
         if let interval = analysis.interval { return interval.shortName }
         if let scale = analysis.scale {
             return "\(scale.tonic.pitchClass.letterName)\(scale.tonic.accidental.displaySymbol) \(scale.name)"

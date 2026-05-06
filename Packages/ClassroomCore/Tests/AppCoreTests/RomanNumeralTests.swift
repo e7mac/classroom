@@ -1,5 +1,6 @@
 import Testing
-@testable import MusicTheory
+ import AppCore
+import ClassroomTheory
 
 @Suite
 struct RomanNumeralTests {

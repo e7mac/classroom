@@ -1,7 +1,7 @@
 #if os(macOS)
 import SwiftUI
 import AppCore
-import MusicTheory
+import ClassroomTheory
 import MusicRendering
 
 @MainActor

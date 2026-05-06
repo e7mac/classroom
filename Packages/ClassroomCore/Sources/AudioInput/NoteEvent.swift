@@ -1,5 +1,5 @@
 import Foundation
-import MusicTheory
+import ClassroomTheory
 
 public struct NoteEvent: Sendable, Hashable {
     public enum Kind: Sendable, Hashable {

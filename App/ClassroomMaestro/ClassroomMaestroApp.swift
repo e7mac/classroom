@@ -3,7 +3,7 @@ import SwiftUI
 import AppKit
 #endif
 import AppCore
-import MusicTheory
+import ClassroomTheory
 import MusicRendering
 import AudioInput
 

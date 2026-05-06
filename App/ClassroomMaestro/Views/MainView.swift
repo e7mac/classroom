@@ -1,6 +1,6 @@
 import SwiftUI
 import AppCore
-import MusicTheory
+import ClassroomTheory
 import MusicRendering
 import AudioInput
 
@@ -196,13 +196,13 @@ struct MainView: View {
     }
 
     private func chordChip(_ chord: Chord) -> some View {
-        Text(chord.symbol)
+        Text(chord.displayName)
             .font(.system(.body, design: .rounded).weight(.medium))
             .padding(.horizontal, 10)
             .padding(.vertical, 4)
             .background(.regularMaterial)
             .clipShape(Capsule())
-            .accessibilityLabel(chord.symbol)
+            .accessibilityLabel(chord.displayName)
     }
 }
 

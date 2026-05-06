@@ -1,7 +1,7 @@
 import Foundation
 import Testing
 @testable import AppCore
-import MusicTheory
+import ClassroomTheory
 import MusicRendering
 import AudioInput
 
@@ -147,7 +147,7 @@ struct AppStateTests {
         state.handle(midiNoteOn(67))
         #expect(state.displayedNotes.count == 3)
         let chord = state.lastAnalysis.chord
-        #expect(chord?.root.pitchClass == .c)
+        #expect(chord?.root == .c)
         #expect(chord?.quality == .major)
     }
 
@@ -158,7 +158,7 @@ struct AppStateTests {
         state.handle(midiNoteOn(67))
         state.handle(midiNoteOn(70))
         let chord = state.lastAnalysis.chord
-        #expect(chord?.root.pitchClass == .c)
+        #expect(chord?.root == .c)
         #expect(chord?.quality == .dominant7)
     }
 
@@ -207,7 +207,7 @@ struct AppStateTests {
         state.handle(midiNoteOn(64))
         state.handle(midiNoteOn(67))
         let chord = state.lastAnalysis.chord
-        #expect(chord?.root.pitchClass == .c)
+        #expect(chord?.root == .c)
         #expect(chord?.quality == .major)
         #expect(state.progression.isEmpty)
     }
@@ -262,7 +262,7 @@ struct AppStateTests {
         state.handle(midiNoteOff(67))
         state.handle(pedal(false))
         #expect(state.progression.count == 1)
-        #expect(state.progression[0].root.pitchClass == .c)
+        #expect(state.progression[0].root == .c)
         #expect(state.progression[0].quality == .major)
     }
 
@@ -288,8 +288,8 @@ struct AppStateTests {
         state.handle(pedal(false))
 
         #expect(state.progression.count == 2)
-        #expect(state.progression[0].root.pitchClass == .c)
-        #expect(state.progression[1].root.pitchClass == .f)
+        #expect(state.progression[0].root == .c)
+        #expect(state.progression[1].root == .f)
         #expect(state.progression[1].quality == .major)
     }
 
@@ -434,7 +434,7 @@ struct AppStateTests {
         #expect(state.displayedNotes.count == 1)
         state.displayMode = .chord
         #expect(state.displayedNotes.count == 3)
-        #expect(state.lastAnalysis.chord?.root.pitchClass == .c)
+        #expect(state.lastAnalysis.chord?.root == .c)
     }
 
     @Test func changingKeyRecomputesSpelling() {

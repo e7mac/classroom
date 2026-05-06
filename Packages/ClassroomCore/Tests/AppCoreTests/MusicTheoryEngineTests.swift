@@ -1,5 +1,6 @@
 import Testing
-@testable import MusicTheory
+ import AppCore
+import ClassroomTheory
 
 @Suite
 struct MusicTheoryEngineTests {
@@ -51,7 +52,7 @@ struct MusicTheoryEngineTests {
         ]
         let chord = engine.identifyChord(notes)
         #expect(chord?.quality == .major)
-        #expect(chord?.root.pitchClass == .c)
+        #expect(chord?.root == .c)
         #expect(chord?.inversion == 0)
     }
 
@@ -63,7 +64,7 @@ struct MusicTheoryEngineTests {
         ]
         let chord = engine.identifyChord(notes)
         #expect(chord?.quality == .minor)
-        #expect(chord?.root.pitchClass == .c)
+        #expect(chord?.root == .c)
         #expect(chord?.inversion == 0)
     }
 
@@ -75,7 +76,7 @@ struct MusicTheoryEngineTests {
         ]
         let chord = engine.identifyChord(notes)
         #expect(chord?.quality == .diminished)
-        #expect(chord?.root.pitchClass == .c)
+        #expect(chord?.root == .c)
         #expect(chord?.inversion == 0)
     }
 
@@ -87,7 +88,7 @@ struct MusicTheoryEngineTests {
         ]
         let chord = engine.identifyChord(notes)
         #expect(chord?.quality == .augmented)
-        #expect(chord?.root.pitchClass == .c)
+        #expect(chord?.root == .c)
         #expect(chord?.inversion == 0)
     }
 
@@ -100,7 +101,7 @@ struct MusicTheoryEngineTests {
         ]
         let chord = engine.identifyChord(notes)
         #expect(chord?.quality == .dominant7)
-        #expect(chord?.root.pitchClass == .c)
+        #expect(chord?.root == .c)
         #expect(chord?.inversion == 0)
     }
 
@@ -113,7 +114,7 @@ struct MusicTheoryEngineTests {
         ]
         let chord = engine.identifyChord(notes)
         #expect(chord?.quality == .major7)
-        #expect(chord?.root.pitchClass == .c)
+        #expect(chord?.root == .c)
         #expect(chord?.inversion == 0)
     }
 
@@ -126,7 +127,7 @@ struct MusicTheoryEngineTests {
         ]
         let chord = engine.identifyChord(notes)
         #expect(chord?.quality == .minor7)
-        #expect(chord?.root.pitchClass == .c)
+        #expect(chord?.root == .c)
         #expect(chord?.inversion == 0)
     }
 
@@ -139,7 +140,7 @@ struct MusicTheoryEngineTests {
         ]
         let chord = engine.identifyChord(notes)
         #expect(chord?.quality == .halfDiminished7)
-        #expect(chord?.root.pitchClass == .c)
+        #expect(chord?.root == .c)
         #expect(chord?.inversion == 0)
     }
 
@@ -152,7 +153,7 @@ struct MusicTheoryEngineTests {
         ]
         let chord = engine.identifyChord(notes)
         #expect(chord?.quality == .diminished7)
-        #expect(chord?.root.pitchClass == .c)
+        #expect(chord?.root == .c)
         #expect(chord?.inversion == 0)
     }
 
@@ -164,7 +165,7 @@ struct MusicTheoryEngineTests {
         ]
         let chord = engine.identifyChord(notes)
         #expect(chord?.quality == .sus2)
-        #expect(chord?.root.pitchClass == .c)
+        #expect(chord?.root == .c)
         #expect(chord?.inversion == 0)
     }
 
@@ -176,7 +177,7 @@ struct MusicTheoryEngineTests {
         ]
         let chord = engine.identifyChord(notes)
         #expect(chord?.quality == .sus4)
-        #expect(chord?.root.pitchClass == .c)
+        #expect(chord?.root == .c)
         #expect(chord?.inversion == 0)
     }
 
@@ -190,9 +191,9 @@ struct MusicTheoryEngineTests {
         ]
         let chord = engine.identifyChord(notes)
         #expect(chord?.quality == .major)
-        #expect(chord?.root.pitchClass == .c)
+        #expect(chord?.root == .c)
         #expect(chord?.inversion == 1)
-        #expect(chord?.bassNote.pitchClass == .e)
+        #expect(chord?.bassNote().pitchClass == .e)
     }
 
     @Test func identifiesCMajorSecondInversion() {
@@ -203,9 +204,9 @@ struct MusicTheoryEngineTests {
         ]
         let chord = engine.identifyChord(notes)
         #expect(chord?.quality == .major)
-        #expect(chord?.root.pitchClass == .c)
+        #expect(chord?.root == .c)
         #expect(chord?.inversion == 2)
-        #expect(chord?.bassNote.pitchClass == .g)
+        #expect(chord?.bassNote().pitchClass == .g)
     }
 
     @Test func identifiesC7ThirdInversion() {
@@ -217,9 +218,9 @@ struct MusicTheoryEngineTests {
         ]
         let chord = engine.identifyChord(notes)
         #expect(chord?.quality == .dominant7)
-        #expect(chord?.root.pitchClass == .c)
+        #expect(chord?.root == .c)
         #expect(chord?.inversion == 3)
-        #expect(chord?.bassNote.pitchClass == .b)
+        #expect(chord?.bassNote().pitchClass == .b)
     }
 
     @Test func identifiesC7SecondInversion() {
@@ -231,9 +232,9 @@ struct MusicTheoryEngineTests {
         ]
         let chord = engine.identifyChord(notes)
         #expect(chord?.quality == .dominant7)
-        #expect(chord?.root.pitchClass == .c)
+        #expect(chord?.root == .c)
         #expect(chord?.inversion == 2)
-        #expect(chord?.bassNote.pitchClass == .g)
+        #expect(chord?.bassNote().pitchClass == .g)
     }
 
     // MARK: - Chord identification (no match)
@@ -355,115 +356,115 @@ struct MusicTheoryEngineTests {
     // MARK: - Roman numeral analysis
 
     @Test func romanIInCMajor() {
-        let chord = Chord(root: Note(pitchClass: .c, octave: 4), quality: .major)
+        let chord = Chord(root: .c, quality: .major)
         let rn = engine.romanNumeral(for: chord, in: .cMajor)
         #expect(rn?.displayString == "I")
     }
 
     @Test func romanIIInCMajor() {
-        let chord = Chord(root: Note(pitchClass: .d, octave: 4), quality: .minor)
+        let chord = Chord(root: .d, quality: .minor)
         let rn = engine.romanNumeral(for: chord, in: .cMajor)
         #expect(rn?.displayString == "ii")
     }
 
     @Test func romanV7InCMajor() {
-        let chord = Chord(root: Note(pitchClass: .g, octave: 4), quality: .dominant7)
+        let chord = Chord(root: .g, quality: .dominant7)
         let rn = engine.romanNumeral(for: chord, in: .cMajor)
         #expect(rn?.displayString == "V7")
     }
 
     @Test func romanViiDimInCMajor() {
-        let chord = Chord(root: Note(pitchClass: .b, octave: 4), quality: .diminished)
+        let chord = Chord(root: .b, quality: .diminished)
         let rn = engine.romanNumeral(for: chord, in: .cMajor)
         #expect(rn?.displayString == "vii°")
     }
 
     @Test func romanIV6InCMajor() {
-        let chord = Chord(root: Note(pitchClass: .f, octave: 4), quality: .major, inversion: 1)
+        let chord = Chord(root: .f, quality: .major, inversion: 1)
         let rn = engine.romanNumeral(for: chord, in: .cMajor)
         #expect(rn?.displayString == "IV6")
     }
 
     @Test func romanV65InCMajor() {
-        let chord = Chord(root: Note(pitchClass: .g, octave: 4), quality: .dominant7, inversion: 1)
+        let chord = Chord(root: .g, quality: .dominant7, inversion: 1)
         let rn = engine.romanNumeral(for: chord, in: .cMajor)
         #expect(rn?.displayString == "V6/5")
     }
 
     @Test func romanV43InCMajor() {
-        let chord = Chord(root: Note(pitchClass: .g, octave: 4), quality: .dominant7, inversion: 2)
+        let chord = Chord(root: .g, quality: .dominant7, inversion: 2)
         let rn = engine.romanNumeral(for: chord, in: .cMajor)
         #expect(rn?.displayString == "V4/3")
     }
 
     @Test func romanV42InCMajor() {
-        let chord = Chord(root: Note(pitchClass: .g, octave: 4), quality: .dominant7, inversion: 3)
+        let chord = Chord(root: .g, quality: .dominant7, inversion: 3)
         let rn = engine.romanNumeral(for: chord, in: .cMajor)
         #expect(rn?.displayString == "V4/2")
     }
 
     @Test func romanFlatVIIInCMajor() {
-        let chord = Chord(root: Note(pitchClass: .b, accidental: .flat, octave: 4), quality: .major)
+        let chord = Chord(root: .b, rootAccidental: .flat, quality: .major)
         let rn = engine.romanNumeral(for: chord, in: .cMajor)
         #expect(rn?.displayString == "♭VII")
     }
 
     @Test func romanFlatIIInCMajor() {
-        let chord = Chord(root: Note(pitchClass: .d, accidental: .flat, octave: 4), quality: .major)
+        let chord = Chord(root: .d, rootAccidental: .flat, quality: .major)
         let rn = engine.romanNumeral(for: chord, in: .cMajor)
         #expect(rn?.displayString == "♭II")
     }
 
     @Test func romanIInAMinor() {
-        let chord = Chord(root: Note(pitchClass: .a, octave: 3), quality: .minor)
+        let chord = Chord(root: .a, quality: .minor)
         let rn = engine.romanNumeral(for: chord, in: .aMinor)
         #expect(rn?.displayString == "i")
     }
 
     @Test func romanV7InAMinor() {
-        let chord = Chord(root: Note(pitchClass: .e, octave: 4), quality: .dominant7)
+        let chord = Chord(root: .e, quality: .dominant7)
         let rn = engine.romanNumeral(for: chord, in: .aMinor)
         #expect(rn?.displayString == "V7")
     }
 
     @Test func romanIVInCMajor() {
-        let chord = Chord(root: Note(pitchClass: .f, octave: 4), quality: .major)
+        let chord = Chord(root: .f, quality: .major)
         let rn = engine.romanNumeral(for: chord, in: .cMajor)
         #expect(rn?.displayString == "IV")
     }
 
     @Test func romanVInCMajor() {
-        let chord = Chord(root: Note(pitchClass: .g, octave: 4), quality: .major)
+        let chord = Chord(root: .g, quality: .major)
         let rn = engine.romanNumeral(for: chord, in: .cMajor)
         #expect(rn?.displayString == "V")
     }
 
     @Test func romanVIInCMajor() {
-        let chord = Chord(root: Note(pitchClass: .a, octave: 4), quality: .minor)
+        let chord = Chord(root: .a, quality: .minor)
         let rn = engine.romanNumeral(for: chord, in: .cMajor)
         #expect(rn?.displayString == "vi")
     }
 
     @Test func romanIIIInCMajor() {
-        let chord = Chord(root: Note(pitchClass: .e, octave: 4), quality: .minor)
+        let chord = Chord(root: .e, quality: .minor)
         let rn = engine.romanNumeral(for: chord, in: .cMajor)
         #expect(rn?.displayString == "iii")
     }
 
     @Test func romanIMaj7InCMajor() {
-        let chord = Chord(root: Note(pitchClass: .c, octave: 4), quality: .major7)
+        let chord = Chord(root: .c, quality: .major7)
         let rn = engine.romanNumeral(for: chord, in: .cMajor)
         #expect(rn?.displayString == "Imaj7")
     }
 
     @Test func romanIIm7InCMajor() {
-        let chord = Chord(root: Note(pitchClass: .d, octave: 4), quality: .minor7)
+        let chord = Chord(root: .d, quality: .minor7)
         let rn = engine.romanNumeral(for: chord, in: .cMajor)
         #expect(rn?.displayString == "ii7")
     }
 
     @Test func romanI64InCMajor() {
-        let chord = Chord(root: Note(pitchClass: .c, octave: 4), quality: .major, inversion: 2)
+        let chord = Chord(root: .c, quality: .major, inversion: 2)
         let rn = engine.romanNumeral(for: chord, in: .cMajor)
         #expect(rn?.displayString == "I6/4")
     }
@@ -526,6 +527,6 @@ struct MusicTheoryEngineTests {
         let spelled = engine.spell(midiNotes: midis, in: .cMajor)
         let chord = engine.identifyChord(spelled)
         #expect(chord?.quality == .major)
-        #expect(chord?.root.pitchClass == .c)
+        #expect(chord?.root == .c)
     }
 }

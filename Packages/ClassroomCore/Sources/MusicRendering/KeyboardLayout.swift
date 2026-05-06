@@ -1,6 +1,6 @@
 import Foundation
 import CoreGraphics
-import MusicTheory
+import ClassroomTheory
 
 public enum KeyboardLayout {
     /// MIDI range piano: A0 (21) ... C8 (108).

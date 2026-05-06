@@ -1,5 +1,9 @@
 import Foundation
+import ClassroomTheory
 
+/// Facade over MusicCore's music theory primitives that adds Classroom's
+/// app-specific algorithms: chord identification from a set of sounding
+/// notes, scale identification, and Roman-numeral analysis.
 public struct MusicTheoryEngine: Sendable {
     public init() {}
 
@@ -27,24 +31,28 @@ public struct MusicTheoryEngine: Sendable {
             let rootPC = mod12(candidate.midiNumber)
             let intervalSet = Set(pitchClassSet.map { mod12($0 - rootPC) })
 
-            for template in ChordTemplate.all {
-                let templateSet = Set(template.intervalsFromRoot.map { mod12($0) })
+            for quality in Self.identifiableQualities {
+                let templateSet = Set(quality.intervals.map { mod12($0) })
                 guard templateSet == intervalSet else { continue }
 
-                let chord = Chord(root: candidate, quality: template.quality, bassNote: bassNote)
-                let chordPCs = chord.notes.map { mod12($0.midiNumber) }
+                // Build the root-position chord first to know the chord
+                // tones and figure out which one is the bass (= inversion).
+                let rootPosition = Chord(root: candidate.pitchClass,
+                                         rootAccidental: candidate.accidental,
+                                         quality: quality)
+                let chordPCs = rootPosition.notes(inOctave: 4)
+                    .map { mod12($0.midiNumber) }
                 let inversion = chordPCs.firstIndex(of: bassPC) ?? 0
-                let chordWithInversion = Chord(
-                    root: candidate,
-                    quality: template.quality,
-                    inversion: inversion,
-                    bassNote: bassNote
-                )
+                let chordWithInversion = Chord(root: candidate.pitchClass,
+                                               rootAccidental: candidate.accidental,
+                                               quality: quality,
+                                               inversion: inversion,
+                                               explicitBass: bassNote)
                 matches.append((
                     chord: chordWithInversion,
                     isBassRoot: rootPC == bassPC,
                     inversion: inversion,
-                    qualityKey: qualityKey(template.quality)
+                    qualityKey: qualityKey(quality)
                 ))
             }
         }
@@ -100,7 +108,7 @@ public struct MusicTheoryEngine: Sendable {
 
     public func romanNumeral(for chord: Chord, in key: KeySignature) -> RomanNumeral? {
         let tonicPC = mod12(key.tonic.naturalSemitones + key.accidental.semitoneOffset)
-        let rootPC = mod12(chord.root.midiNumber)
+        let rootPC = chord.rootChromaticIndex
         let offsetFromTonic = mod12(rootPC - tonicPC)
 
         let scalePattern: [Int] = key.mode == .major
@@ -127,8 +135,10 @@ public struct MusicTheoryEngine: Sendable {
 
         let isUpper: Bool = {
             switch chord.quality {
-            case .major, .augmented, .dominant7, .major7, .sus2, .sus4: return true
-            case .minor, .diminished, .minor7, .halfDiminished7, .diminished7: return false
+            case .major, .augmented, .dominant7, .major7, .sus2, .sus4, .major6: return true
+            case .minor, .diminished, .minor7, .halfDiminished7, .diminished7,
+                 .minorMajor7, .minor6:
+                return false
             }
         }()
 
@@ -139,7 +149,9 @@ public struct MusicTheoryEngine: Sendable {
 
         let isSeventh: Bool = {
             switch chord.quality {
-            case .dominant7, .major7, .minor7, .halfDiminished7, .diminished7: return true
+            case .dominant7, .major7, .minor7, .halfDiminished7, .diminished7,
+                 .minorMajor7:
+                return true
             default: return false
             }
         }()
@@ -160,6 +172,7 @@ public struct MusicTheoryEngine: Sendable {
                 case .minor7: qualityModifier = "7"
                 case .halfDiminished7: qualityModifier = "ø7"
                 case .diminished7: qualityModifier = "°7"
+                case .minorMajor7: qualityModifier = "(M7)"
                 default: break
                 }
             case 1: inversionFigure = "6/5"
@@ -183,6 +196,7 @@ public struct MusicTheoryEngine: Sendable {
             case .augmented: qualityModifier = "+"
             case .sus2: qualityModifier = "sus2"
             case .sus4: qualityModifier = "sus4"
+            case .major6, .minor6: qualityModifier = "6"
             default: break
             }
             switch chord.inversion {
@@ -203,6 +217,18 @@ public struct MusicTheoryEngine: Sendable {
         EnharmonicSpeller().alternatives(for: note, includeDoubles: includeDoubles)
     }
 
+    // MARK: - Internal
+
+    /// Qualities the chord-identification algorithm tries to match.
+    /// Mirrors Classroom's historical ChordTemplate.all set — we don't
+    /// emit MusicCore's added qualities (minorMajor7, major6, minor6)
+    /// because the original Classroom algorithm wasn't tuned for them.
+    private static let identifiableQualities: [Chord.Quality] = [
+        .major, .minor, .diminished, .augmented,
+        .dominant7, .major7, .minor7, .halfDiminished7, .diminished7,
+        .sus2, .sus4,
+    ]
+
     private func mod12(_ value: Int) -> Int {
         ((value % 12) + 12) % 12
     }
@@ -220,6 +246,9 @@ public struct MusicTheoryEngine: Sendable {
         case .diminished7: return "9_diminished7"
         case .sus2: return "A_sus2"
         case .sus4: return "B_sus4"
+        case .minorMajor7: return "C_minorMajor7"
+        case .major6: return "D_major6"
+        case .minor6: return "E_minor6"
         }
     }
 }

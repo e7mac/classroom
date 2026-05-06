@@ -1,5 +1,5 @@
 import Testing
-@testable import MusicTheory
+ import ClassroomTheory
 
 @Suite
 struct IntervalTests {

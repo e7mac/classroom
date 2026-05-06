@@ -1,5 +1,5 @@
 import Foundation
-import MusicTheory
+import ClassroomTheory
 
 public struct HistoryEntry: Sendable, Hashable, Identifiable {
     public let id: UUID

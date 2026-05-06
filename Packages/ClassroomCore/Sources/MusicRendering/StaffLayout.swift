@@ -1,6 +1,6 @@
 import Foundation
 import CoreGraphics
-import MusicTheory
+import ClassroomTheory
 
 public enum StaffLayout {
     public enum Clef: Sendable, Hashable, CaseIterable {
@@ -183,7 +183,7 @@ public enum StaffLayout {
         accidentalXOffset: CGFloat = -14
     ) -> GlyphPlacement? {
         guard note.accidental != .natural else { return nil }
-        return GlyphPlacement(symbol: note.accidental.symbol, x: accidentalXOffset, y: y)
+        return GlyphPlacement(symbol: note.accidental.engravingSymbol, x: accidentalXOffset, y: y)
     }
 
     // MARK: - Full note layout
@@ -215,7 +215,7 @@ public enum StaffLayout {
         for note in key.sharpsAndFlats {
             let displayNote = repositioned(note, forKeySignatureIn: clef)
             let y = yPosition(for: displayNote, clef: clef, geometry: geometry)
-            glyphs.append(GlyphPlacement(symbol: displayNote.accidental.symbol, x: x, y: y))
+            glyphs.append(GlyphPlacement(symbol: displayNote.accidental.engravingSymbol, x: x, y: y))
             x += glyphSpacing
         }
         return glyphs

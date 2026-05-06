@@ -1,5 +1,5 @@
 import SwiftUI
-import MusicTheory
+import ClassroomTheory
 
 public struct KeySignaturePicker: View {
     @Binding public var selection: KeySignature

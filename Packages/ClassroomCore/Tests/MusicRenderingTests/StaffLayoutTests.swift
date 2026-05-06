@@ -1,6 +1,6 @@
 import Testing
 import CoreGraphics
-import MusicTheory
+import ClassroomTheory
 @testable import MusicRendering
 
 @Suite struct StaffLayoutClefTests {

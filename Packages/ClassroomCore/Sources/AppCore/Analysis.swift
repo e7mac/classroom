@@ -1,4 +1,4 @@
-import MusicTheory
+import ClassroomTheory
 
 public struct Analysis: Sendable, Equatable {
     public var chord: Chord?

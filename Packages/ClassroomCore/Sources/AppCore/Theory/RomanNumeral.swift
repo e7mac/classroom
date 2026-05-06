@@ -1,4 +1,5 @@
 import Foundation
+import ClassroomTheory
 
 public struct RomanNumeral: Hashable, Sendable {
     public let symbol: String

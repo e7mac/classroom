@@ -1,6 +1,6 @@
 import Testing
 import Foundation
-@testable import MusicTheory
+ import ClassroomTheory
 
 @Suite
 struct NoteTests {
