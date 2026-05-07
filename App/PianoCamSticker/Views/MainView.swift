@@ -94,7 +94,7 @@ struct MainView: View {
 
     private var topBar: some View {
         HStack(spacing: 12) {
-            Text("ClassroomMaestro")
+            Text("PianoCam Sticker")
                 .font(.system(size: 18, weight: .semibold, design: .rounded))
             Spacer()
             inputSourceControls

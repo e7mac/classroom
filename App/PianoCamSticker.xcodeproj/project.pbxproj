@@ -1,0 +1,551 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		05F11B9C8E515444E3410DEC /* FloatingPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ADA41276E713B52D93207EB /* FloatingPanel.swift */; };
+		079EB4F10E3E704D6B6C14E7 /* Bravura-LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 7279C98B44FF139BCD2FEEE4 /* Bravura-LICENSE.txt */; };
+		0887E326B5317006C0EA4728 /* WidgetManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A4983795EB6E00BDEC70E7B /* WidgetManager.swift */; };
+		13DB143108F3283AF5860C2C /* AnalysisOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDA782D20674BB931740EF0 /* AnalysisOverlayView.swift */; };
+		1C364C4C58FE65788BD22880 /* AccessibilityHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4090C984B5962B3280AEBB4D /* AccessibilityHelpers.swift */; };
+		1C3E15D8E0F4A44BBEA390D8 /* WidgetVisualSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = A144BD6F60F3C04131491F1C /* WidgetVisualSettings.swift */; };
+		20BAC258A18860CB96E9D3BD /* ComboWidgetContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45543C26845E5D0E0602F8EC /* ComboWidgetContent.swift */; };
+		308CA84CC76823ED347D19C9 /* StaffView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA691A95929A7CE87D1186F /* StaffView.swift */; };
+		31DC7D6FFEF0D756FA2E06ED /* AudioInput in Frameworks */ = {isa = PBXBuildFile; productRef = 24752A61F13DFA8CC6290D01 /* AudioInput */; };
+		36C99BDB660BCD3001BA9A44 /* ToolPaletteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2324061C9FF78B9F21F480B9 /* ToolPaletteView.swift */; };
+		43CEDCA6CC401D2C2832B34D /* KeySignaturePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A4A952EB10857CBE5F68583 /* KeySignaturePicker.swift */; };
+		458168DBC011DB2B3F4BEE51 /* MusicTheory in Frameworks */ = {isa = PBXBuildFile; productRef = 708DB2F6D068F82AEBFC4525 /* MusicTheory */; };
+		58A3C53D87DCF002783B56AB /* AnalysisWidgetContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ADA0AADB8F1CE311569404E /* AnalysisWidgetContent.swift */; };
+		58E3AD9BEE950C0A73E57691 /* BravuraFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06B22F7A3484680A865FB621 /* BravuraFont.swift */; };
+		6979DD8671CC19852EF6F035 /* Bravura.otf in Resources */ = {isa = PBXBuildFile; fileRef = 66D4297C4D171825A341EF17 /* Bravura.otf */; };
+		8B93C545ED0FC91827BBD9B4 /* WidgetFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6904521DAED2DCA8F6128C /* WidgetFrame.swift */; };
+		9057F2563B50EC6B5741DA4D /* LayoutPreset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C06DD49EEC1403F722A7035 /* LayoutPreset.swift */; };
+		944DF1B9D9061A339B39FAB2 /* StaffWidgetContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 726F7289B1188F28C9C181C9 /* StaffWidgetContent.swift */; };
+		96AAB9A83EBA9CA91C25655B /* AppCore in Frameworks */ = {isa = PBXBuildFile; productRef = FC53D8237627ED3EB6CBB265 /* AppCore */; };
+		999DD7770DB94A1096960905 /* WidgetChrome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BE01F3B45B566A7E237F929 /* WidgetChrome.swift */; };
+		A1C23441F09951821B190B73 /* WidgetWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30EC02454C1C0D71D2F24F6D /* WidgetWindowController.swift */; };
+		A8DBC19B118290E81ADDEFF0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CB84300DA8A3686919C8AA1C /* Assets.xcassets */; };
+		B1E196E87FD95CDD2AF18347 /* WidgetKind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A7A36FEF17FA9681BACC1E1 /* WidgetKind.swift */; };
+		B6D26F7947F3E8A1B58F3BC9 /* PianoCamStickerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22A81C5A3C1AA622597E416 /* PianoCamStickerApp.swift */; };
+		BFC7F92AF50E0C89C2B1A4FB /* AppStateBindings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80CD7CB3947407F9D2790BDE /* AppStateBindings.swift */; };
+		C2209488ADB45B2C32C4A023 /* StageMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 827F7688F53F30B4B6BF2AE0 /* StageMode.swift */; };
+		CC0042B4FA94A3DD1AFBB2D8 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA4DF7AF515613D7A1715D7 /* MainView.swift */; };
+		D18CEBD17E4C576F8772CD03 /* RecentHistoryStrip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC63052890519BD50D34F61 /* RecentHistoryStrip.swift */; };
+		D387A33E1E9DAA16865D865F /* KeyboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1F2D3A5D572E10BC689C17 /* KeyboardView.swift */; };
+		D53F3B414A58A61757BD83B4 /* KeyboardShortcuts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C41BE5194FF61F7C137B8AA /* KeyboardShortcuts.swift */; };
+		E189A1E5D2F9E29D39C0A4B2 /* GrandStaffWidgetContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF9C26AF568CA7725C930196 /* GrandStaffWidgetContent.swift */; };
+		F7D2F35C8FAF2BEF9D24BDDD /* MusicRendering in Frameworks */ = {isa = PBXBuildFile; productRef = 5256EDC741F82E2532E76B61 /* MusicRendering */; };
+		F9F0DDD2B3B3048AD14F6786 /* KeyboardWidgetContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2F3CAB5E8435234D0314AF /* KeyboardWidgetContent.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		06B22F7A3484680A865FB621 /* BravuraFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BravuraFont.swift; sourceTree = "<group>"; };
+		0A4A952EB10857CBE5F68583 /* KeySignaturePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeySignaturePicker.swift; sourceTree = "<group>"; };
+		0A7A36FEF17FA9681BACC1E1 /* WidgetKind.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetKind.swift; sourceTree = "<group>"; };
+		0ADA41276E713B52D93207EB /* FloatingPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingPanel.swift; sourceTree = "<group>"; };
+		0E20BEB15DA89B2F28AF0211 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		12C403D629647BB6CE39FF1E /* PianoCamSticker.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = PianoCamSticker.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1B2F3CAB5E8435234D0314AF /* KeyboardWidgetContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardWidgetContent.swift; sourceTree = "<group>"; };
+		2324061C9FF78B9F21F480B9 /* ToolPaletteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolPaletteView.swift; sourceTree = "<group>"; };
+		30EC02454C1C0D71D2F24F6D /* WidgetWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetWindowController.swift; sourceTree = "<group>"; };
+		3ADA0AADB8F1CE311569404E /* AnalysisWidgetContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalysisWidgetContent.swift; sourceTree = "<group>"; };
+		3BC63052890519BD50D34F61 /* RecentHistoryStrip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentHistoryStrip.swift; sourceTree = "<group>"; };
+		3D1F2D3A5D572E10BC689C17 /* KeyboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardView.swift; sourceTree = "<group>"; };
+		4090C984B5962B3280AEBB4D /* AccessibilityHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibilityHelpers.swift; sourceTree = "<group>"; };
+		45543C26845E5D0E0602F8EC /* ComboWidgetContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComboWidgetContent.swift; sourceTree = "<group>"; };
+		4BDA782D20674BB931740EF0 /* AnalysisOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalysisOverlayView.swift; sourceTree = "<group>"; };
+		5BE01F3B45B566A7E237F929 /* WidgetChrome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetChrome.swift; sourceTree = "<group>"; };
+		66D4297C4D171825A341EF17 /* Bravura.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Bravura.otf; sourceTree = "<group>"; };
+		6A4983795EB6E00BDEC70E7B /* WidgetManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetManager.swift; sourceTree = "<group>"; };
+		6C06DD49EEC1403F722A7035 /* LayoutPreset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutPreset.swift; sourceTree = "<group>"; };
+		726F7289B1188F28C9C181C9 /* StaffWidgetContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaffWidgetContent.swift; sourceTree = "<group>"; };
+		7279C98B44FF139BCD2FEEE4 /* Bravura-LICENSE.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "Bravura-LICENSE.txt"; sourceTree = "<group>"; };
+		80CD7CB3947407F9D2790BDE /* AppStateBindings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStateBindings.swift; sourceTree = "<group>"; };
+		827F7688F53F30B4B6BF2AE0 /* StageMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StageMode.swift; sourceTree = "<group>"; };
+		8C40593CFE88B89916DC36A2 /* ClassroomCore */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ClassroomCore; path = ../Packages/ClassroomCore; sourceTree = SOURCE_ROOT; };
+		8FA691A95929A7CE87D1186F /* StaffView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaffView.swift; sourceTree = "<group>"; };
+		90A9A0E63F0A8C1931EDEFCF /* PianoCamSticker.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PianoCamSticker.entitlements; sourceTree = "<group>"; };
+		9C41BE5194FF61F7C137B8AA /* KeyboardShortcuts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardShortcuts.swift; sourceTree = "<group>"; };
+		A144BD6F60F3C04131491F1C /* WidgetVisualSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetVisualSettings.swift; sourceTree = "<group>"; };
+		AA6904521DAED2DCA8F6128C /* WidgetFrame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetFrame.swift; sourceTree = "<group>"; };
+		B22A81C5A3C1AA622597E416 /* PianoCamStickerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PianoCamStickerApp.swift; sourceTree = "<group>"; };
+		CB84300DA8A3686919C8AA1C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		CBA4DF7AF515613D7A1715D7 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		CF9C26AF568CA7725C930196 /* GrandStaffWidgetContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrandStaffWidgetContent.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D2183D4B5F11497F91343BA9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				96AAB9A83EBA9CA91C25655B /* AppCore in Frameworks */,
+				458168DBC011DB2B3F4BEE51 /* MusicTheory in Frameworks */,
+				F7D2F35C8FAF2BEF9D24BDDD /* MusicRendering in Frameworks */,
+				31DC7D6FFEF0D756FA2E06ED /* AudioInput in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0170C239FF9786C363DB6887 /* Widgets */ = {
+			isa = PBXGroup;
+			children = (
+				0ADA41276E713B52D93207EB /* FloatingPanel.swift */,
+				6C06DD49EEC1403F722A7035 /* LayoutPreset.swift */,
+				827F7688F53F30B4B6BF2AE0 /* StageMode.swift */,
+				AA6904521DAED2DCA8F6128C /* WidgetFrame.swift */,
+				0A7A36FEF17FA9681BACC1E1 /* WidgetKind.swift */,
+				6A4983795EB6E00BDEC70E7B /* WidgetManager.swift */,
+				A144BD6F60F3C04131491F1C /* WidgetVisualSettings.swift */,
+				30EC02454C1C0D71D2F24F6D /* WidgetWindowController.swift */,
+				89B0F70BE1DF6D2515498425 /* Content */,
+			);
+			path = Widgets;
+			sourceTree = "<group>";
+		};
+		16E8E22029CC69EB9A75B9EA /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				7279C98B44FF139BCD2FEEE4 /* Bravura-LICENSE.txt */,
+				66D4297C4D171825A341EF17 /* Bravura.otf */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		4C0612C90F144FAC5D18CAAB = {
+			isa = PBXGroup;
+			children = (
+				F44DE6ABCC8786E6C35EDDAC /* Packages */,
+				FF48BBFA3A57C8A51FF7DA10 /* PianoCamSticker */,
+				DC04CABEAC055FEAA8E22AB4 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		720574AD5ABEF8E1CE77FD00 /* Input */ = {
+			isa = PBXGroup;
+			children = (
+				9C41BE5194FF61F7C137B8AA /* KeyboardShortcuts.swift */,
+			);
+			path = Input;
+			sourceTree = "<group>";
+		};
+		89B0F70BE1DF6D2515498425 /* Content */ = {
+			isa = PBXGroup;
+			children = (
+				3ADA0AADB8F1CE311569404E /* AnalysisWidgetContent.swift */,
+				45543C26845E5D0E0602F8EC /* ComboWidgetContent.swift */,
+				CF9C26AF568CA7725C930196 /* GrandStaffWidgetContent.swift */,
+				1B2F3CAB5E8435234D0314AF /* KeyboardWidgetContent.swift */,
+				726F7289B1188F28C9C181C9 /* StaffWidgetContent.swift */,
+				5BE01F3B45B566A7E237F929 /* WidgetChrome.swift */,
+			);
+			path = Content;
+			sourceTree = "<group>";
+		};
+		A16FB21346B78BD63C593553 /* State */ = {
+			isa = PBXGroup;
+			children = (
+				80CD7CB3947407F9D2790BDE /* AppStateBindings.swift */,
+			);
+			path = State;
+			sourceTree = "<group>";
+		};
+		DC04CABEAC055FEAA8E22AB4 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				12C403D629647BB6CE39FF1E /* PianoCamSticker.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F44DE6ABCC8786E6C35EDDAC /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				8C40593CFE88B89916DC36A2 /* ClassroomCore */,
+			);
+			name = Packages;
+			sourceTree = "<group>";
+		};
+		F5C4501BDB40D5C73DC2B090 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				4090C984B5962B3280AEBB4D /* AccessibilityHelpers.swift */,
+				4BDA782D20674BB931740EF0 /* AnalysisOverlayView.swift */,
+				06B22F7A3484680A865FB621 /* BravuraFont.swift */,
+				3D1F2D3A5D572E10BC689C17 /* KeyboardView.swift */,
+				0A4A952EB10857CBE5F68583 /* KeySignaturePicker.swift */,
+				CBA4DF7AF515613D7A1715D7 /* MainView.swift */,
+				3BC63052890519BD50D34F61 /* RecentHistoryStrip.swift */,
+				8FA691A95929A7CE87D1186F /* StaffView.swift */,
+				2324061C9FF78B9F21F480B9 /* ToolPaletteView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		FF48BBFA3A57C8A51FF7DA10 /* PianoCamSticker */ = {
+			isa = PBXGroup;
+			children = (
+				CB84300DA8A3686919C8AA1C /* Assets.xcassets */,
+				0E20BEB15DA89B2F28AF0211 /* Info.plist */,
+				90A9A0E63F0A8C1931EDEFCF /* PianoCamSticker.entitlements */,
+				B22A81C5A3C1AA622597E416 /* PianoCamStickerApp.swift */,
+				720574AD5ABEF8E1CE77FD00 /* Input */,
+				16E8E22029CC69EB9A75B9EA /* Resources */,
+				A16FB21346B78BD63C593553 /* State */,
+				F5C4501BDB40D5C73DC2B090 /* Views */,
+				0170C239FF9786C363DB6887 /* Widgets */,
+			);
+			path = PianoCamSticker;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		E37358CED65A488242C6CC2C /* PianoCamSticker */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 15E421D55ACE1B0BEEE3A313 /* Build configuration list for PBXNativeTarget "PianoCamSticker" */;
+			buildPhases = (
+				7C8420CE77E50EE53BAC9450 /* Sources */,
+				F2C18B7F1B1CCBC69136C1B0 /* Resources */,
+				D2183D4B5F11497F91343BA9 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PianoCamSticker;
+			packageProductDependencies = (
+				FC53D8237627ED3EB6CBB265 /* AppCore */,
+				708DB2F6D068F82AEBFC4525 /* MusicTheory */,
+				5256EDC741F82E2532E76B61 /* MusicRendering */,
+				24752A61F13DFA8CC6290D01 /* AudioInput */,
+			);
+			productName = PianoCamSticker;
+			productReference = 12C403D629647BB6CE39FF1E /* PianoCamSticker.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		8B3D8FEA63B694FAD6C613DE /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					E37358CED65A488242C6CC2C = {
+						DevelopmentTeam = 232HCB982K;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = B9FDFF11D2732328F02E5729 /* Build configuration list for PBXProject "PianoCamSticker" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 4C0612C90F144FAC5D18CAAB;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				38FAEABA6FF5E5A8CB284E91 /* XCLocalSwiftPackageReference "../Packages/ClassroomCore" */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = DC04CABEAC055FEAA8E22AB4 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				E37358CED65A488242C6CC2C /* PianoCamSticker */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		F2C18B7F1B1CCBC69136C1B0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A8DBC19B118290E81ADDEFF0 /* Assets.xcassets in Resources */,
+				079EB4F10E3E704D6B6C14E7 /* Bravura-LICENSE.txt in Resources */,
+				6979DD8671CC19852EF6F035 /* Bravura.otf in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		7C8420CE77E50EE53BAC9450 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1C364C4C58FE65788BD22880 /* AccessibilityHelpers.swift in Sources */,
+				13DB143108F3283AF5860C2C /* AnalysisOverlayView.swift in Sources */,
+				58A3C53D87DCF002783B56AB /* AnalysisWidgetContent.swift in Sources */,
+				BFC7F92AF50E0C89C2B1A4FB /* AppStateBindings.swift in Sources */,
+				58E3AD9BEE950C0A73E57691 /* BravuraFont.swift in Sources */,
+				20BAC258A18860CB96E9D3BD /* ComboWidgetContent.swift in Sources */,
+				05F11B9C8E515444E3410DEC /* FloatingPanel.swift in Sources */,
+				E189A1E5D2F9E29D39C0A4B2 /* GrandStaffWidgetContent.swift in Sources */,
+				43CEDCA6CC401D2C2832B34D /* KeySignaturePicker.swift in Sources */,
+				D53F3B414A58A61757BD83B4 /* KeyboardShortcuts.swift in Sources */,
+				D387A33E1E9DAA16865D865F /* KeyboardView.swift in Sources */,
+				F9F0DDD2B3B3048AD14F6786 /* KeyboardWidgetContent.swift in Sources */,
+				9057F2563B50EC6B5741DA4D /* LayoutPreset.swift in Sources */,
+				CC0042B4FA94A3DD1AFBB2D8 /* MainView.swift in Sources */,
+				B6D26F7947F3E8A1B58F3BC9 /* PianoCamStickerApp.swift in Sources */,
+				D18CEBD17E4C576F8772CD03 /* RecentHistoryStrip.swift in Sources */,
+				308CA84CC76823ED347D19C9 /* StaffView.swift in Sources */,
+				944DF1B9D9061A339B39FAB2 /* StaffWidgetContent.swift in Sources */,
+				C2209488ADB45B2C32C4A023 /* StageMode.swift in Sources */,
+				36C99BDB660BCD3001BA9A44 /* ToolPaletteView.swift in Sources */,
+				999DD7770DB94A1096960905 /* WidgetChrome.swift in Sources */,
+				8B93C545ED0FC91827BBD9B4 /* WidgetFrame.swift in Sources */,
+				B1E196E87FD95CDD2AF18347 /* WidgetKind.swift in Sources */,
+				0887E326B5317006C0EA4728 /* WidgetManager.swift in Sources */,
+				1C3E15D8E0F4A44BBEA390D8 /* WidgetVisualSettings.swift in Sources */,
+				A1C23441F09951821B190B73 /* WidgetWindowController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		4EDC8D82492EF01F84C0D7E7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = PianoCamSticker/PianoCamSticker.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COMBINE_HIDPI_IMAGES = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = PianoCamSticker/Info.plist;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.mayank.pianocamsticker;
+				PRODUCT_NAME = PianoCamSticker;
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		A5004E42FC6E0040BAF897E6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = PianoCamSticker/PianoCamSticker.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COMBINE_HIDPI_IMAGES = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = PianoCamSticker/Info.plist;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.mayank.pianocamsticker;
+				PRODUCT_NAME = PianoCamSticker;
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		CD2C24BFDF62EB755A3BF4A4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 232HCB982K;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_VERSION = 6.0;
+			};
+			name = Debug;
+		};
+		E973D1D4DC775B40E1A68800 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 232HCB982K;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_VERSION = 6.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		15E421D55ACE1B0BEEE3A313 /* Build configuration list for PBXNativeTarget "PianoCamSticker" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4EDC8D82492EF01F84C0D7E7 /* Debug */,
+				A5004E42FC6E0040BAF897E6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		B9FDFF11D2732328F02E5729 /* Build configuration list for PBXProject "PianoCamSticker" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CD2C24BFDF62EB755A3BF4A4 /* Debug */,
+				E973D1D4DC775B40E1A68800 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		38FAEABA6FF5E5A8CB284E91 /* XCLocalSwiftPackageReference "../Packages/ClassroomCore" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ../Packages/ClassroomCore;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		24752A61F13DFA8CC6290D01 /* AudioInput */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AudioInput;
+		};
+		5256EDC741F82E2532E76B61 /* MusicRendering */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MusicRendering;
+		};
+		708DB2F6D068F82AEBFC4525 /* MusicTheory */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MusicTheory;
+		};
+		FC53D8237627ED3EB6CBB265 /* AppCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AppCore;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 8B3D8FEA63B694FAD6C613DE /* Project object */;
+}

@@ -1,6 +1,6 @@
-# ClassroomMaestro
+# PianoCam Sticker
 
-Native macOS/iOS SwiftUI app for music teachers: real-time staff/keyboard display and music theory analysis from MIDI or acoustic piano input, with floating always-on-top widgets for use over Zoom/Meet.
+Native macOS/iOS SwiftUI app for piano teachers: real-time staff/keyboard display and music theory analysis from MIDI or acoustic piano input, with floating always-on-top widgets for use over Zoom/Meet.
 
 ## Building
 
@@ -9,7 +9,7 @@ Native macOS/iOS SwiftUI app for music teachers: real-time staff/keyboard displa
 cd App && xcodegen generate
 
 # Open workspace (includes both app and package)
-open ClassroomMaestro.xcworkspace
+open PianoCamSticker.xcworkspace
 
 # Run package tests (no Xcode needed)
 cd Packages/ClassroomCore && swift test
@@ -23,10 +23,10 @@ Requirements: Xcode 26+, Swift 6.0, `brew install xcodegen`.
 
 ```
 classroom/
-├── ClassroomMaestro.xcworkspace    Open this in Xcode
+├── PianoCamSticker.xcworkspace    Open this in Xcode
 ├── App/
 │   ├── project.yml                 XcodeGen spec — edit this, not the .xcodeproj
-│   └── ClassroomMaestro/
+│   └── PianoCamSticker/
 │       ├── Views/                  SwiftUI views (staff, keyboard, analysis, widgets)
 │       ├── Widgets/                macOS floating window system
 │       ├── State/                  AppStateContainer (bridges engines → SwiftUI)
@@ -88,7 +88,7 @@ After adding a `.swift` file, regenerate the project:
 ```bash
 cd App && xcodegen generate
 ```
-The Ruby scripts in `App/ClassroomMaestro/` (if present) can help register files across targets.
+The Ruby scripts in `App/PianoCamSticker/` (if present) can help register files across targets.
 
 ## Testing
 

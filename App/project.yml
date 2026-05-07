@@ -1,6 +1,6 @@
-name: ClassroomMaestro
+name: PianoCamSticker
 options:
-  bundleIdPrefix: com.classroommaestro
+  bundleIdPrefix: com.mayank.pianocamsticker
   deploymentTarget:
     macOS: "14.0"
     iOS: "17.0"
@@ -14,7 +14,7 @@ settings:
     SWIFT_STRICT_CONCURRENCY: complete
     MACOSX_DEPLOYMENT_TARGET: "14.0"
     IPHONEOS_DEPLOYMENT_TARGET: "17.0"
-    DEVELOPMENT_TEAM: ""
+    DEVELOPMENT_TEAM: 232HCB982K
     CODE_SIGN_STYLE: Automatic
     ENABLE_HARDENED_RUNTIME: YES
     ENABLE_APP_SANDBOX: YES
@@ -24,16 +24,16 @@ packages:
     path: ../Packages/ClassroomCore
 
 targets:
-  ClassroomMaestro:
+  PianoCamSticker:
     type: application
     supportedDestinations: [macOS, iOS, iPad]
     deploymentTarget:
       macOS: "14.0"
       iOS: "17.0"
     sources:
-      - path: ClassroomMaestro
+      - path: PianoCamSticker
     resources:
-      - path: ClassroomMaestro/Resources
+      - path: PianoCamSticker/Resources
         optional: true
     dependencies:
       - package: ClassroomCore
@@ -45,13 +45,15 @@ targets:
       - package: ClassroomCore
         product: AudioInput
     info:
-      path: ClassroomMaestro/Info.plist
+      path: PianoCamSticker/Info.plist
       properties:
-        CFBundleDisplayName: ClassroomMaestro
+        CFBundleDisplayName: PianoCam Sticker
         CFBundleShortVersionString: "0.1.0"
         CFBundleVersion: "1"
         LSMinimumSystemVersion: "14.0"
-        NSMicrophoneUsageDescription: "ClassroomMaestro listens to your acoustic piano to display the notes you play in real time."
+        NSMicrophoneUsageDescription: "PianoCam Sticker listens to your acoustic piano to display the notes you play in real time."
+        UILaunchScreen:
+          UIColorName: ""
         NSHighResolutionCapable: true
         ATSApplicationFontsPath: "."
         UIAppFonts:
@@ -68,16 +70,17 @@ targets:
           - UIInterfaceOrientationLandscapeLeft
           - UIInterfaceOrientationLandscapeRight
     entitlements:
-      path: ClassroomMaestro/ClassroomMaestro.entitlements
+      path: PianoCamSticker/PianoCamSticker.entitlements
       properties:
         com.apple.security.app-sandbox: true
         com.apple.security.device.audio-input: true
         com.apple.security.device.usb: true
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.classroommaestro.app
-        PRODUCT_NAME: ClassroomMaestro
+        PRODUCT_BUNDLE_IDENTIFIER: com.mayank.pianocamsticker
+        PRODUCT_NAME: PianoCamSticker
         GENERATE_INFOPLIST_FILE: NO
+        INFOPLIST_KEY_UILaunchScreen_Generation: "YES"
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
         COMBINE_HIDPI_IMAGES: YES
         TARGETED_DEVICE_FAMILY: "1,2"

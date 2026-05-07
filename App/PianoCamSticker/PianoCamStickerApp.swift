@@ -8,11 +8,11 @@ import MusicRendering
 import AudioInput
 
 @main
-struct ClassroomMaestroApp: App {
+struct PianoCamStickerApp: App {
     @StateObject private var container = AppStateContainer()
 
     var body: some Scene {
-        WindowGroup("ClassroomMaestro") {
+        WindowGroup("PianoCam Sticker") {
             MainView()
                 .environmentObject(container)
                 .environmentObject(container.appState)
@@ -30,9 +30,9 @@ struct ClassroomMaestroApp: App {
         .windowStyle(.titleBar)
         .commands {
             CommandGroup(replacing: .appInfo) {
-                Button("About ClassroomMaestro") {
+                Button("About PianoCam Sticker") {
                     NSApp.orderFrontStandardAboutPanel(options: [
-                        .applicationName: "ClassroomMaestro",
+                        .applicationName: "PianoCam Sticker",
                         .applicationVersion: "0.1.0",
                         .credits: NSAttributedString(
                             string: "Music education classroom display tool.\nUses Bravura SMuFL font (SIL OFL).",

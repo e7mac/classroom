@@ -15,10 +15,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "A758740D7E7F1E347CFD2D6F"
-               BuildableName = "ClassroomMaestro.app"
-               BlueprintName = "ClassroomMaestro"
-               ReferencedContainer = "container:ClassroomMaestro.xcodeproj">
+               BlueprintIdentifier = "E37358CED65A488242C6CC2C"
+               BuildableName = "PianoCamSticker.app"
+               BlueprintName = "PianoCamSticker"
+               ReferencedContainer = "container:PianoCamSticker.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -32,10 +32,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "A758740D7E7F1E347CFD2D6F"
-            BuildableName = "ClassroomMaestro.app"
-            BlueprintName = "ClassroomMaestro"
-            ReferencedContainer = "container:ClassroomMaestro.xcodeproj">
+            BlueprintIdentifier = "E37358CED65A488242C6CC2C"
+            BuildableName = "PianoCamSticker.app"
+            BlueprintName = "PianoCamSticker"
+            ReferencedContainer = "container:PianoCamSticker.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <Testables>
@@ -57,10 +57,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "A758740D7E7F1E347CFD2D6F"
-            BuildableName = "ClassroomMaestro.app"
-            BlueprintName = "ClassroomMaestro"
-            ReferencedContainer = "container:ClassroomMaestro.xcodeproj">
+            BlueprintIdentifier = "E37358CED65A488242C6CC2C"
+            BuildableName = "PianoCamSticker.app"
+            BlueprintName = "PianoCamSticker"
+            ReferencedContainer = "container:PianoCamSticker.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <CommandLineArguments>
@@ -76,10 +76,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "A758740D7E7F1E347CFD2D6F"
-            BuildableName = "ClassroomMaestro.app"
-            BlueprintName = "ClassroomMaestro"
-            ReferencedContainer = "container:ClassroomMaestro.xcodeproj">
+            BlueprintIdentifier = "E37358CED65A488242C6CC2C"
+            BuildableName = "PianoCamSticker.app"
+            BlueprintName = "PianoCamSticker"
+            ReferencedContainer = "container:PianoCamSticker.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <CommandLineArguments>

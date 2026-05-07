@@ -7,7 +7,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>ClassroomMaestro</string>
+	<string>PianoCam Sticker</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -27,7 +27,7 @@
 	<key>NSHighResolutionCapable</key>
 	<true/>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>ClassroomMaestro listens to your acoustic piano to display the notes you play in real time.</string>
+	<string>PianoCam Sticker listens to your acoustic piano to display the notes you play in real time.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Bravura.otf</string>
@@ -36,6 +36,11 @@
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
 		<true/>
+	</dict>
+	<key>UILaunchScreen</key>
+	<dict>
+		<key>UIColorName</key>
+		<string></string>
 	</dict>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>

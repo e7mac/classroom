@@ -157,12 +157,15 @@ public struct AnalysisOverlayView: View {
         case .dominant7: qualityWord = "Dominant 7"
         case .major7: qualityWord = "Major 7"
         case .minor7: qualityWord = "Minor 7"
+        case .minorMajor7: qualityWord = "Minor-Major 7"
         case .halfDiminished7: qualityWord = "Half-Diminished 7"
         case .diminished7: qualityWord = "Fully Diminished 7"
         case .sus2: qualityWord = "Sus2"
         case .sus4: qualityWord = "Sus4"
+        case .major6: qualityWord = "Major 6"
+        case .minor6: qualityWord = "Minor 6"
         }
-        let rootSymbol = "\(chord.root.pitchClass.letterName)\(chord.root.accidental.displaySymbol)"
+        let rootSymbol = "\(chord.root.letterName)\(chord.rootAccidental.displaySymbol)"
         return "\(rootSymbol) \(qualityWord)"
     }
 }
@@ -173,7 +176,7 @@ public struct AnalysisOverlayView: View {
 }
 
 #Preview("Chord — pop/jazz") {
-    let chord = Chord(root: Note(midi: 60), quality: .major7)
+    let chord = Chord(root: .c, quality: .major7)
     return AnalysisOverlayView(
         analysis: Analysis(chord: chord),
         displayMode: .popJazz
@@ -181,7 +184,7 @@ public struct AnalysisOverlayView: View {
 }
 
 #Preview("Chord — Roman numeral") {
-    let chord = Chord(root: Note(midi: 67), quality: .dominant7)
+    let chord = Chord(root: .g, quality: .dominant7)
     let roman = RomanNumeral(symbol: "V", qualityModifier: "7")
     return AnalysisOverlayView(
         analysis: Analysis(chord: chord, romanNumeral: roman),
@@ -201,7 +204,7 @@ public struct AnalysisOverlayView: View {
 
 #Preview("Hidden") {
     AnalysisOverlayView(
-        analysis: Analysis(chord: Chord(root: Note(midi: 60), quality: .major)),
+        analysis: Analysis(chord: Chord(root: .c, quality: .major)),
         isVisible: false
     ).padding()
 }
